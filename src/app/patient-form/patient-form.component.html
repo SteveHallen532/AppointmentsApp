@@ -1,0 +1,51 @@
+<form action="submit" ngNativeValidate>
+    <div class="container">
+        <div class="row padding">
+            <input type="text" class="form-control" placeholder="Nombre" name="nombre" id="inp-nombre" [(ngModel)]="patient.nombre" required>
+        </div>
+        <div class="row padding">
+            <input type="text" class="form-control" placeholder="Apellido" name="apellido" id="inp-apellido" [(ngModel)]="patient.apellido" required>
+        </div>
+        <div class="row padding">
+            <input type="tel" class="form-control" placeholder="Telefono" name="tel" id="inp-tel" [(ngModel)]="patient.telefono">
+        </div>
+        <div class="row padding">
+            <input type="email" class="form-control" placeholder="Email" name="email" id="inp-email" [(ngModel)]="patient.email">
+        </div>
+        <div class="row padding">
+            <input type="text" class="form-control" placeholder="DNI" name="dni" id="inp-dni" [(ngModel)]="patient.dni">
+        </div>
+        <div class="row padding">
+            <select class="form-select" aria-label="genero" name="genero" [(ngModel)]="selected">
+                <option value="Género" [disabled]="true">Género</option>
+                <ng-container>
+                    <option [ngValue]="option" *ngFor="let option of gender">{{option}}</option>
+                </ng-container>
+              </select>
+        </div>
+        <div class="row padding">
+            <input type="text" class="form-control" placeholder="Obra social" name="obra-social" id="inp-obra-social" [(ngModel)]="patient.obra_social">
+        </div>
+        <div class="row padding">
+            <input type="text" class="form-control" placeholder="Numero Obra Social" name="num-obra-social" id="inp-num-obra-social" [(ngModel)]="patient.num_obra_social">
+        </div>
+        <div class="row padding">
+            <div class="padding-bottom">
+                <label for="inp-birthday">Fecha de nacimiento</label>
+            </div>
+            <div class="padding-bottom">
+                <input type="date" class="form-control" name="birthday" id="inp-birthday" [(ngModel)]="patient.fecha_nacimiento">
+            </div>
+        </div>
+        <div class="container">
+            <div class="d-flex flex-row-reverse padding-top">
+                <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary" (click)="request()" value="Guardar">
+                </div>
+                <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

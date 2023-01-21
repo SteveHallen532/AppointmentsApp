@@ -1,0 +1,45 @@
+<p class="h1 text-center">Anuncios</p>
+<form action="submit" ngNativeValidate>
+    <div class="container">
+        <div class="row padding">
+            <input type="text" class="form-control" placeholder="Titulo" name="title" id="inp-title" [(ngModel)]="announcement.title" required>
+        </div>
+        <div class="row padding">
+            <textarea class="form-control" name="body" id="inp-body" rows="3" [(ngModel)]="announcement.body" required></textarea>
+        </div>
+        <div class="container">
+            <div class="d-flex flex-row-reverse padding">
+                <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary" (click)="newAnnouncement()" value="Guardar">
+                </div>
+                <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <div class="d-flex justify-content-center" *ngIf="loading == true">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="row" *ngFor="let announcement of announcements">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-11 col-10">
+                            <h5 class="card-title">{{announcement.title}}</h5>
+                        </div>
+                        <div class="col-lg-1 col-2 d-flex justify-content-center">
+                            <button type="button" class="btn-close" aria-label="Close" (click)="delete(announcement._id)"></button>
+                        </div>
+                    </div>
+                    <p class="card-text">{{announcement.body}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

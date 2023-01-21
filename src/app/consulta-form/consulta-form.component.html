@@ -1,0 +1,25 @@
+<form action="submit" ngNativeValidate>
+    <div class="container">
+        <div class="form-group">
+            <input type="date" class="form-control" name="fecha" [(ngModel)]="consulta.fecha">
+        </div>
+        <div class="form-group">
+            <label for="inp-altura">Altura:</label>
+            <input type="text" class="form-control" name="altura" id="inp-altura" [(ngModel)]="consulta.altura" required>
+        </div>
+        <div class="form-group">
+            <label for="inp-peso">Peso:</label>
+            <input type="text" class="form-control" name="peso" id="inp-peso" [(ngModel)]="consulta.peso" required>
+            <div class="container">
+                <div class="d-flex flex-row-reverse padding-top">
+                    <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
+                        <input type="submit" class="btn btn-primary" (click)="saveConsulta()" value="Guardar">
+                    </div>
+                    <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
