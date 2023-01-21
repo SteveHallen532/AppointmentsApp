@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: ''
+  apiUrl: 'https://old-turnos-app-back-to-reuse.herokuapp.com/api'
 };
