@@ -11,7 +11,7 @@ export class PatientsService {
 
 constructor(private http: HttpClient) { }
 
-    getPatients(organizacion_id):Observable<Patient[]>{
+    getPatients(organizacion_id:string):Observable<Patient[]>{
       return this.http.get<Patient[]>(`${environment.apiUrl}/patient/list/`+organizacion_id)
     }
 
