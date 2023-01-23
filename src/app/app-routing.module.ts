@@ -23,6 +23,7 @@ const routes: Routes = [
   {path:'appointments', component: AppointmentsComponent, canActivate: [AuthGuard]},
   {path:'appointments-form', component: AppointmentsFormComponent, canActivate: [AuthGuard]},
   {path:'appointments-form/:id', component: AppointmentsFormComponent, canActivate: [AuthGuard]},
+  {path:'appointments-form/:id/:id_patient', component: AppointmentsFormComponent, canActivate: [AuthGuard]},
   {path:'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
   {path:'home', component: HomeComponent, canActivate: [AuthGuard]},
   // {path:'log-in', component:LogInComponent, canActivate: [AuthGuard]},

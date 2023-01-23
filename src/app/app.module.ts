@@ -25,6 +25,7 @@ import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoginComponent } from './components/login/login.component';
+import { FilterByDatePipe } from './pipes/filter-by-date.pipe';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { LoginComponent } from './components/login/login.component';
     AppointmentsListComponent,
     FilterPatientsPipe,
     SellectPatientComponent,
-    LoginComponent
+    LoginComponent,
+    FilterByDatePipe
   ],
   imports: [
     BrowserModule,

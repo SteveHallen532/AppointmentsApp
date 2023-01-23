@@ -10,6 +10,8 @@ import { Appointment } from '../../models/Appointment';
 import { Patient } from '../../models/Patient';
 import { AppointmentsService } from '../../services/appointments.service';
 import { PatientsService } from '../../services/patients.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-appointments-list',
@@ -100,12 +102,12 @@ export class AppointmentsListComponent implements OnInit {
 
   calendarize(a:string) {
     return moment(a, "YYYY MM DD").locale('es').calendar(null, {
-      sameDay: '[Hoy]',
-      nextDay: '[Mañana]',
-      nextWeek: 'dddd',
-      lastDay: '[Ayer]',
-      lastWeek: '[Last] dddd',
-      sameElse: 'DD/MM/YYYY'
+      sameDay: '[Hoy] - DD/MM/YYYY',
+      nextDay: '[Mañana] - DD/MM/YYYY',
+      nextWeek: 'dddd - DD/MM/YYYY',
+      lastDay: '[Ayer] - DD/MM/YYYY',
+      lastWeek: 'dddd [pasado] - DD/MM/YYYY',
+      sameElse: 'dddd DD/MM/YYYY'
     })
   }
 
@@ -195,7 +197,11 @@ export class AppointmentsListComponent implements OnInit {
   //Solo para los sobreturnos
 
   squeezeIn(){
-    this.router.navigate(['/appointments-form']);
+    if(this.idPatient != undefined){
+      this.router.navigate(['/appointments-form','', this.idPatient]);
+    } else {
+      this.router.navigate(['/appointments-form']);
+    }
   }
 
   edit(id:string){
@@ -203,12 +209,29 @@ export class AppointmentsListComponent implements OnInit {
   }
 
   delete(id:string){
-    this.appointment_service.deleteAppointment(id)
-    .subscribe(
-      () => {
-        location.reload();
+    Swal.fire({
+      title: 'Estás seguro?',
+      text: "Esta acción no se puede deshacer!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointment_service.deleteAppointment(id)
+          .subscribe(() =>{
+            Swal.fire(
+              'Eliminado!',
+              'Sobreturno eliminado.',
+              'success'
+            )
+            setTimeout(() => window.location.reload(), 1500)
+            }
+          );
       }
-    )
+    })
   }
 
 }
