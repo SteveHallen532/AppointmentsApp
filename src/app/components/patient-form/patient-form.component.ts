@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Patient } from '../models/Patient';
+import { Patient } from '../../models/Patient';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PatientsService } from '../services/patients.service';
+import { PatientsService } from '../../services/patients.service';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -18,10 +20,15 @@ export class PatientFormComponent implements OnInit {
   route:string = '';
   gender = ['Femenino', 'Masculino'];
   selected = 'Género';
+  currentUser: Usuario;
 
-  constructor(private activatedRoute: ActivatedRoute, private patients_service:PatientsService, private router: Router) {}
+  constructor(private activatedRoute: ActivatedRoute, 
+              private patients_service:PatientsService, 
+              private router: Router,
+              private auth_service: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.id = this.activatedRoute.snapshot.params['id'];
     this.route = this.activatedRoute.snapshot.params['route']
     if(this.id != "new") {
@@ -49,6 +56,7 @@ export class PatientFormComponent implements OnInit {
     }
     if(this.id == "new"){ 
       if(this.patient.nombre != '' && this.patient.apellido != '') {
+        this.patient.organizacion = this.currentUser.organizacion;
         this.patients_service.newPatient(this.patient)
       .subscribe(() =>{
           this.router.navigate(['/patients-list']);  

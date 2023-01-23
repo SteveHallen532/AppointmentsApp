@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Consulta } from '../models/Consulta';
-import { ConsultasService } from '../services/consultas.service';
-import { HistoriaClinica } from '../models/HistoriaClinica';
-import { MedicalHistoryService } from '../services/medical-history.service';
+import { Consulta } from '../../models/Consulta';
+import { ConsultasService } from '../../services/consultas.service';
+import { HistoriaClinica } from '../../models/HistoriaClinica';
+import { MedicalHistoryService } from '../../services/medical-history.service';
 import { ActivatedRoute, Router} from '@angular/router';
-import { AppointmentsService } from '../services/appointments.service';
-import { Appointment } from '../models/Appointment';
-import { PatientsService } from '../services/patients.service';
-import { Patient } from '../models/Patient';
+import { AppointmentsService } from '../../services/appointments.service';
+import { Appointment } from '../../models/Appointment';
+import { PatientsService } from '../../services/patients.service';
+import { Patient } from '../../models/Patient';
 import * as moment from 'moment';
 
 @Component({

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://old-turnos-app-back-to-reuse.herokuapp.com/api'
+  apiUrl: 'http://localhost:4000/api'
 };
 
 /*

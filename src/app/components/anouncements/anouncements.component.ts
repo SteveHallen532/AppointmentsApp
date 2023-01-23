@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Announcement } from '../models/Announcement';
-import { AnnouncementsService } from '../services/announcements.service';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Announcement } from '../../models/Announcement';
+import { AnnouncementsService } from '../../services/announcements.service';
 
 @Component({
   selector: 'app-anouncements',
@@ -13,15 +15,18 @@ export class AnouncementsComponent implements OnInit {
   announcements:Announcement[] = [];
   announcement:Announcement = new Announcement;
 
+  currentUser: Usuario;
 
-  constructor(private announcement_service:AnnouncementsService) { }
+  constructor(private announcement_service:AnnouncementsService,
+              private auth_service: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.getAnnouncements();
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
+    this.getAnnouncements(this.currentUser.organizacion._id);
   }
 
-  getAnnouncements() {
-    this.announcement_service.getAnnouncements()
+  getAnnouncements(organizacion_id) {
+    this.announcement_service.getAnnouncements(organizacion_id)
       .subscribe(result=>{
         this.announcements = result;
         this.loading = false;
@@ -40,6 +45,7 @@ export class AnouncementsComponent implements OnInit {
   newAnnouncement() {
     if(this.announcement.body != '' && this.announcement.title != '') {
       this.announcement.date = Date.now();
+      this.announcement.organizacion=this.currentUser.organizacion;
       this.announcement_service.newAnnouncement(this.announcement)
       .subscribe(() =>{
         window.location.reload();

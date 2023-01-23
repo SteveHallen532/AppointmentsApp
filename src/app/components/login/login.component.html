@@ -1,0 +1,50 @@
+<div class="container" style="padding-top: 100px;">
+    <div class="row h-100">
+        <div class="col-12 h-100">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12" style="text-align: center;">
+                            <img src="../../../assets/images/new_logo.PNG" alt="" height="80px" width="auto">                            
+                        </div>
+                        <div class="col-12" style="text-align: center;">
+                            <h3 class="font-weight-light my-2" style="font-size: 25px;font-weight: bold;">TURNOS APP</h3>
+                        </div>
+                    </div>                        
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group"><label class="small mb-1" style="font-size: 15px;" for="inputEmailAddress">Usuario</label>
+                            <input  formControlName="username" class="form-control py-4" id="username" type="username" placeholder="Ingrese usuario" />
+                            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                <div *ngIf="f.username.errors.required">Username is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group"><label class="small mb-1" style="font-size: 15px;" for="inputPassword">Contraseña</label>
+                            <input  formControlName="password" class="form-control py-4" id="password" type="password" placeholder="Ingrese contraseña" />
+                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                <div *ngIf="f.password.errors.required">Password is required</div>
+                            </div>
+                        </div>    
+                                                
+                        <div style="height: 30px">
+                            <div  *ngIf="error" class="text-danger text-center">{{error}}</div>
+                        </div>
+                        <div class="" style="text-align: center;width: 100%;">
+                            <button id="login-button" [disabled]="loading" class="btn btn-primary cta-btn">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Ingresar
+                            </button>
+                        </div>
+                        <div style="text-align: center;">
+                            <!-- <a class="small" (click)="contactarAdmin()" routerLink="/auth/recovery-password">¿Olvidaste la contraseña?</a> -->
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- <div class="small"><a  (click)="contactarAdmin()" routerLink="/auth/register">No estas regristrado? Crear cuenta!</a></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

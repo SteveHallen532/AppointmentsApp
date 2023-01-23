@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Patient } from '../models/Patient';
-import { PatientsService } from '../services/patients.service';
+import { Patient } from '../../models/Patient';
+import { PatientsService } from '../../services/patients.service';
 import Swal from 'sweetalert2'
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Usuario } from 'src/app/models/Usuario';
 
 @Component({
   selector: 'app-patients-list',
@@ -17,16 +19,20 @@ export class PatientsListComponent implements OnInit {
 
   filterargs='';
   subtitle='Filtrar por nombre o apellido'
- 
-  constructor(private patients_service:PatientsService, private router:Router) { }
+  currentUser: Usuario;
+
+  constructor(private patients_service:PatientsService, 
+              private router:Router,
+              private auth_service: AuthenticationService
+              ) { }
 
   ngOnInit(): void {
-
-    this.getPatients();
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
+    this.getPatients(this.auth_service.currentUserValue.organizacion._id);
   }
 
-  getPatients(){
-    this.patients_service.getPatients()
+  getPatients(organizacion_id){
+    this.patients_service.getPatients(organizacion_id)
     .subscribe(
       result =>{
         this.patients=result;

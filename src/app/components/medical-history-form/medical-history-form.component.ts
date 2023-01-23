@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoriaClinica } from '../models/HistoriaClinica';
-import { MedicalHistoryService } from '../services/medical-history.service';
+import { HistoriaClinica } from '../../models/HistoriaClinica';
+import { MedicalHistoryService } from '../../services/medical-history.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PatientsService } from '../services/patients.service';
-import { Patient } from '../models/Patient';
+import { PatientsService } from '../../services/patients.service';
+import { Patient } from '../../models/Patient';
 
 @Component({
   selector: 'app-medical-history-form',

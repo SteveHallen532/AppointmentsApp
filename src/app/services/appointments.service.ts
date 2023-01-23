@@ -11,8 +11,8 @@ export class AppointmentsService {
 
   constructor(private http:HttpClient) {}
 
-  getAppointments():Observable<Appointment[]>{
-    return this.http.get<Appointment[]>(`${environment.apiUrl}/appointment_clinica/list`)
+  getAppointments(organizacion_id):Observable<Appointment[]>{
+    return this.http.get<Appointment[]>(`${environment.apiUrl}/appointment_clinica/list/`+organizacion_id)
   }
 
   getAppointment(id:string):Observable<Appointment>{

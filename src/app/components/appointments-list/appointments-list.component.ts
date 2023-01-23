@@ -4,10 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { resourceUsage } from 'process';
 import { elementAt } from 'rxjs';
-import { Appointment } from '../models/Appointment';
-import { Patient } from '../models/Patient';
-import { AppointmentsService } from '../services/appointments.service';
-import { PatientsService } from '../services/patients.service';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Appointment } from '../../models/Appointment';
+import { Patient } from '../../models/Patient';
+import { AppointmentsService } from '../../services/appointments.service';
+import { PatientsService } from '../../services/patients.service';
 
 @Component({
   selector: 'app-appointments-list',
@@ -30,12 +32,19 @@ export class AppointmentsListComponent implements OnInit {
 
   appointment: Appointment = new Appointment;
 
-  constructor(private patient_service:PatientsService, private activatedRoute:ActivatedRoute, private appointment_service:AppointmentsService, private router:Router, ) { }
+  currentUser: Usuario;
+
+  constructor(private patient_service:PatientsService, 
+              private activatedRoute:ActivatedRoute, 
+              private appointment_service:AppointmentsService, 
+              private router:Router,
+              private auth_service: AuthenticationService ) { }
 
   ngOnInit(): void {
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.idPatient = this.activatedRoute.snapshot.params['id'];
     if(this.appointmentsInput.length <= 0) {
-      this.getAppointments();
+      this.getAppointments(this.currentUser.organizacion._id);
     } else {
       this.appointments = this.appointmentsInput;
       if(this.appointments.length > 0) {
@@ -48,8 +57,8 @@ export class AppointmentsListComponent implements OnInit {
     
   }
 
-  getAppointments(){
-    this.appointment_service.getAppointments()
+  getAppointments(organizacion_id){
+    this.appointment_service.getAppointments(organizacion_id)
     .subscribe(
       result => {
         this.appointments = result;

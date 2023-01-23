@@ -1,3 +1,4 @@
+import { Organizacion } from "./Organizacion";
 import { Patient } from "./Patient";
 
 export class Appointment {
@@ -9,6 +10,7 @@ export class Appointment {
     asignado: boolean;
     enabled: boolean;
     confirmado: boolean;
+    organizacion: Organizacion;
 
     constructor() {
         this._id = '';

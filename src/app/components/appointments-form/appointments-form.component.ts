@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Appointment } from '../models/Appointment';
-import { Patient } from '../models/Patient';
-import { AppointmentsService } from '../services/appointments.service';
-import { PatientsService } from '../services/patients.service';
+import { Appointment } from '../../models/Appointment';
+import { Patient } from '../../models/Patient';
+import { AppointmentsService } from '../../services/appointments.service';
+import { PatientsService } from '../../services/patients.service';
 import { Location } from '@angular/common';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-appointments-form',
@@ -21,10 +23,17 @@ export class AppointmentsFormComponent implements OnInit {
   selectedPatient: string = '';
   subtitle='Filtrar por nombre o apellido'
 
-  constructor(private location:Location, private router:Router, private activatedRoute:ActivatedRoute, private patient_service:PatientsService, private appointment_service:AppointmentsService) { }
+  constructor(private location:Location, 
+              private router:Router, 
+              private activatedRoute:ActivatedRoute, 
+              private patient_service:PatientsService, 
+              private appointment_service:AppointmentsService,
+              private auth_service: AuthenticationService) { }
   
+  currentUser: Usuario;
 
   ngOnInit(): void {
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.id = this.activatedRoute.snapshot.params['id'];
 
     if(this.id == undefined) {
@@ -42,7 +51,7 @@ export class AppointmentsFormComponent implements OnInit {
       )
     }
 
-    this.patient_service.getPatients()
+    this.patient_service.getPatients(this.auth_service.currentUserValue.organizacion._id)
     .subscribe(
       result => {
         this.patients = result;
@@ -66,6 +75,7 @@ export class AppointmentsFormComponent implements OnInit {
     this.appointment.patient = selected[0];
     this.appointment.sobreturno = true;
     this.appointment.asignado = true;
+    this.appointment.organizacion=this.currentUser.organizacion;
     this.appointment_service.newAppointment(this.appointment).subscribe(
       () => {
         this.router.navigate(['/appointments-list']);

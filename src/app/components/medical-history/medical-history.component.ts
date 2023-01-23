@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router} from '@angular/router';
-import { HistoriaClinica } from '../models/HistoriaClinica';
-import { Patient } from '../models/Patient';
-import { MedicalHistoryService } from '../services/medical-history.service';
-import { PatientsService } from '../services/patients.service';
+import { HistoriaClinica } from '../../models/HistoriaClinica';
+import { Patient } from '../../models/Patient';
+import { MedicalHistoryService } from '../../services/medical-history.service';
+import { PatientsService } from '../../services/patients.service';
 
 @Component({
   selector: 'app-medical-history',

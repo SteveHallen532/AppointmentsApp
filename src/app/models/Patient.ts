@@ -1,3 +1,5 @@
+import { Organizacion } from "./Organizacion";
+
 export class Patient{
 
     _id: string;
@@ -10,6 +12,7 @@ export class Patient{
     obra_social: string;
     num_obra_social: string;
     fecha_nacimiento: string;
+    organizacion: Organizacion
 
     constructor(){
         this._id= '';

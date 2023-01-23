@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Appointment } from '../models/Appointment';
-import { Patient } from '../models/Patient';
-import { AppointmentsService } from '../services/appointments.service';
-import { PatientsService } from '../services/patients.service';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Appointment } from '../../models/Appointment';
+import { Patient } from '../../models/Patient';
+import { AppointmentsService } from '../../services/appointments.service';
+import { PatientsService } from '../../services/patients.service';
 
 @Component({
   selector: 'app-sellect-patient',
@@ -20,10 +22,16 @@ export class SellectPatientComponent implements OnInit {
 
   appointment = new Appointment;
 
+  currentUser: Usuario;
+
   filterargs='';
   subtitle='Filtrar por nombre o apellido'
  
-  constructor(private activatedRoute: ActivatedRoute, private patients_service:PatientsService, private appointment_service: AppointmentsService, private router:Router) { }
+  constructor(private activatedRoute: ActivatedRoute, 
+              private patients_service:PatientsService, 
+              private appointment_service: AppointmentsService, 
+              private router:Router,
+              private auth_service: AuthenticationService) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
@@ -32,7 +40,7 @@ export class SellectPatientComponent implements OnInit {
   }
 
   getPatients(){
-    this.patients_service.getPatients()
+    this.patients_service.getPatients(this.auth_service.currentUserValue.organizacion._id)
     .subscribe(
       result =>{
         this.patients=result;

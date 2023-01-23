@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Consulta } from '../models/Consulta';
-import { ConsultasService } from '../services/consultas.service';
+import { Consulta } from '../../models/Consulta';
+import { ConsultasService } from '../../services/consultas.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 

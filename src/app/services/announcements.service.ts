@@ -11,8 +11,8 @@ export class AnnouncementsService {
 
   constructor(private http: HttpClient) {}
 
-  getAnnouncements():Observable<Announcement[]>{
-    return this.http.get<Announcement[]>(`${environment.apiUrl}/announcement/list`)
+  getAnnouncements(organizacion_id):Observable<Announcement[]>{
+    return this.http.get<Announcement[]>(`${environment.apiUrl}/announcement/list/`+organizacion_id)
   }
 
   getAnnouncement(id:string):Observable<Announcement>{
