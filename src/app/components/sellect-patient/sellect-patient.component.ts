@@ -34,6 +34,7 @@ export class SellectPatientComponent implements OnInit {
               private auth_service: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.id = this.activatedRoute.snapshot.params['id'];
     this.getAppointment(this.id);
     this.getPatients();  
