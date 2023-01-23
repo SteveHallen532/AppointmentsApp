@@ -24,7 +24,6 @@ import { SellectPatientComponent } from './components/sellect-patient/sellect-pa
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 
 
@@ -55,7 +54,6 @@ import { LoginComponent } from './components/login/login.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
