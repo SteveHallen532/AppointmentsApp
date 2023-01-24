@@ -23,6 +23,19 @@
   <p class="h2 padding-top">Consultas</p>
   <div *ngIf="loading == false">
     <div *ngIf="this.consultas.length >= 1; else elseBlock">
+      <div class="row">
+        <div clas="col-2">
+            <p class="h6">Filtrar por fecha</p>
+           <div class="row">
+            <div class="col-3">
+                <input type="date" class="form-control" [(ngModel)]="date1">
+            </div>
+            <div class="col-3">
+                <input type="date" class="form-control" [(ngModel)]="date2">
+            </div>
+           </div>
+        </div>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -32,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let consulta of consultas">
+          <tr *ngFor="let consulta of consultas| filterByDate: date1 : date2">
                 <!--que la fecha predeterminada sea la del dia pero que permita 
                   cambiarla en el formulario antes de guardar cambios-->
             <th scope="row">{{consulta.fecha}}</th>

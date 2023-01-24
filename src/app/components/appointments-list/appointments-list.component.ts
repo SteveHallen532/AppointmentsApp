@@ -147,16 +147,53 @@ export class AppointmentsListComponent implements OnInit {
     this.appointment_service.unAssign(id, this.appointment)
     .subscribe(
       () =>{
-        location.reload();
+        Swal.fire({
+          title: 'Liberar?',
+          text: "Liberar turno?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Liberar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Turno liberado.',
+              'success'
+            )
+            setTimeout(() =>  location.reload(), 1500)
+          }
+        })
       }
     )
   }
 
+  // Request hecha desde consultas/id_patient
   assign(){
     this.appointment_service.assign(this.appointment._id, this.patient._id, this.appointment)
     .subscribe(
       () =>{
-        this.router.navigate(['/consultas/' + this.patient._id])
+
+        Swal.fire({
+          title: 'Asignar?',
+          text: "Asignar turno a " + this.patient.nombre + ' ' + this.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Asignar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Turno asignado.',
+              'success'
+            )
+            setTimeout(() => this.router.navigate(['/consultas/' + this.patient._id]), 1000)
+            }
+        })
+
       }
     )
   }
@@ -165,7 +202,24 @@ export class AppointmentsListComponent implements OnInit {
     this.appointment_service.lock(id, appointment)
     .subscribe(
       () => {
-        location.reload();
+        Swal.fire({
+          title: 'Bloquear?',
+          text: "Bloquear turno?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Bloquear!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Sobreturno bloqueado.',
+              'success'
+            )
+            setTimeout(() =>  location.reload(), 1500)
+          }
+        })
       }
     )
   }
@@ -174,7 +228,24 @@ export class AppointmentsListComponent implements OnInit {
     this.appointment_service.unLock(id, appointment)
     .subscribe(
       () => {
-        location.reload();
+        Swal.fire({
+          title: 'Desbloquear?',
+          text: "Desbloquear turno?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Desloquear!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Sobreturno desbloqueado.',
+              'success'
+            )
+            setTimeout(() =>  location.reload(), 1500)
+          }
+        })
       }
     )
   }
@@ -227,7 +298,7 @@ export class AppointmentsListComponent implements OnInit {
         this.appointment_service.deleteAppointment(id)
           .subscribe(() =>{
             Swal.fire(
-              'Eliminado!',
+              'Hecho!',
               'Sobreturno eliminado.',
               'success'
             )

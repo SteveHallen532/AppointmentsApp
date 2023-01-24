@@ -59,7 +59,7 @@ export class PatientsListComponent implements OnInit {
               'Paciente eliminado.',
               'success'
             )
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 1000)
             }
           );
       }

@@ -17,6 +17,10 @@ import * as moment from 'moment';
 })
 export class ConsultasComponent implements OnInit {
 
+  date1 = '';
+
+  date2 = '';
+
   loading = true;
 
   id_patient: string = '';

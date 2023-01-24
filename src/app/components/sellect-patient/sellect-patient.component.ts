@@ -6,6 +6,8 @@ import { Appointment } from '../../models/Appointment';
 import { Patient } from '../../models/Patient';
 import { AppointmentsService } from '../../services/appointments.service';
 import { PatientsService } from '../../services/patients.service';
+import Swal from 'sweetalert2';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sellect-patient',
@@ -26,6 +28,8 @@ export class SellectPatientComponent implements OnInit {
 
   filterargs='';
   subtitle='Filtrar por nombre o apellido'
+
+  patient = new Patient;
  
   constructor(private activatedRoute: ActivatedRoute, 
               private patients_service:PatientsService, 
@@ -63,7 +67,25 @@ export class SellectPatientComponent implements OnInit {
     this.appointment_service.assign(this.appointment._id, patient._id, this.appointment)
     .subscribe(
       () =>{
-        this.router.navigate(['/appointments-list'])
+        Swal.fire({
+          title: 'Asignar?',
+          text: "Asignar turno a " + patient.nombre + ' ' + patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Asignar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Turno asignado.',
+              'success'
+            )
+            setTimeout(() => this.router.navigate(['/appointments-list']), 1000)
+            }
+        })
+        
       }
     )
   }

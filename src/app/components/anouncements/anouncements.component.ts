@@ -3,6 +3,7 @@ import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Announcement } from '../../models/Announcement';
 import { AnnouncementsService } from '../../services/announcements.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anouncements',
@@ -37,7 +38,25 @@ export class AnouncementsComponent implements OnInit {
   delete(id:string){
     this.announcement_service.deleteAnnouncement(id)
     .subscribe(() =>{
-      window.location.reload();
+      Swal.fire({
+        title: 'Seguro?',
+        text: "Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Hecho!',
+            'Anuncio eliminado.',
+            'success'
+          )
+          setTimeout(() => window.location.reload(), 1000)
+        }
+      })
       }
     );
   }
@@ -48,7 +67,14 @@ export class AnouncementsComponent implements OnInit {
       this.announcement.organizacion=this.currentUser.organizacion;
       this.announcement_service.newAnnouncement(this.announcement)
       .subscribe(() =>{
-        window.location.reload();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Guardado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        setTimeout(() => window.location.reload(), 1000);
         }
       );
     }

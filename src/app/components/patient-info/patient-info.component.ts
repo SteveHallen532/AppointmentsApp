@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Patient } from '../../models/Patient';
 import { PatientsService } from '../../services/patients.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 
@@ -36,9 +37,26 @@ export class PatientInfoComponent implements OnInit {
     delete(id:string){
       this.patients_service.deletePatient(id)
       .subscribe(() =>{
-          this.router.navigate(['/patients-list'])
-        }
-      );
+        Swal.fire({
+          title: 'Seguro?',
+          text: "Esta acción no se puede deshacer!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Eliminar!',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Pciente eliminado.',
+              'success'
+            )
+            setTimeout(() => this.router.navigate(['/patients-list']), 1000)
+          }
+        })  
+      });
     }
 
     goToPatientForm() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Consulta } from '../../models/Consulta';
 import { ConsultasService } from '../../services/consultas.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -32,16 +33,23 @@ export class ConsultaFormComponent implements OnInit {
   }
 
   saveConsulta() {
-    console.log(this.id)
     if(this.consulta.altura != '' && this.consulta.peso != '') {
 
       this.consulta_service.newConsultas(this.consulta, this.id)
       .subscribe(() =>{
-        this.router.navigate(['consultas/' + this.id_patient]);  
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Datos guardados',
+          showConfirmButton: false,
+          timer: 1500
+          })
+        setTimeout(() =>  this.router.navigate(['consultas/' + this.id_patient]), 1000)
         }
       );
     }
   }
+       
 
   cancel(){
     this.consulta.altura = '';

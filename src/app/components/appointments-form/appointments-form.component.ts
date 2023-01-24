@@ -8,6 +8,8 @@ import { PatientsService } from '../../services/patients.service';
 import { Location } from '@angular/common';
 import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import Swal from 'sweetalert2';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointments-form',
@@ -95,14 +97,31 @@ export class AppointmentsFormComponent implements OnInit {
          }
        }
      );
- 
+     
      this.appointment.patient = selected[0];
      this.appointment.sobreturno = true;
      this.appointment.asignado = true;
      this.appointment.organizacion=this.currentUser.organizacion;
      this.appointment_service.newAppointment(this.appointment).subscribe(
        () => {
-         this.router.navigate(['/appointments-list']);
+        Swal.fire({
+          title: 'Asignar?',
+          text: "Asignar sobreturno a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + this.appointment.fecha + ' a las ' + this.appointment.hora,
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Asignar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Sobreturno asignado.',
+              'success'
+            )
+            setTimeout(() => this.router.navigate(['/appointments-list']), 1000)
+          }
+        })
        }
      )
     } else {
@@ -111,7 +130,24 @@ export class AppointmentsFormComponent implements OnInit {
      this.appointment.asignado = true;
      this.appointment_service.newAppointment(this.appointment).subscribe(
        () => {
-         this.router.navigate(['/consultas/', this.idPatient]);
+        Swal.fire({
+          title: 'Asignar?',
+          text: "Asignar sobreturno a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Asignar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Sobreturno asignado.',
+              'success'
+            )
+            setTimeout(() => this.router.navigate(['/consultas/', this.idPatient]), 1000)
+          }
+        })
        }
      )
     }
@@ -136,7 +172,24 @@ export class AppointmentsFormComponent implements OnInit {
     this.appointment_service.updateAppointment(this.appointment._id, this.appointment)
     .subscribe(
       () => {
-        this.location.back();
+        Swal.fire({
+          title: 'Editar?',
+          text: "Editar sobreturno de " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' para el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Editar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Hecho!',
+              'Sobreturno editado.',
+              'success'
+            )
+            setTimeout(() => this.location.back(), 1000)
+          }
+        })
       }
     )
   }

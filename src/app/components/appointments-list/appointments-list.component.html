@@ -1,5 +1,7 @@
 <div class="container">
-    <p class="h1">Turnos</p>
+    <div *ngIf="appointmentsInput.length <= 0">
+        <p class="h1">Turnos</p>
+    </div>
     <div class="row">
         <div clas="col-2">
             <p class="h6">Filtrar por fecha</p>
