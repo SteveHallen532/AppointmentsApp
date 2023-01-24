@@ -22,6 +22,10 @@ export class AppointmentsListComponent implements OnInit {
 
   @Input() appointmentsInput: Appointment[] = [];
 
+  date1 = '';
+
+  date2 = '';
+
   idPatient = '';
 
   patient = new Patient;
