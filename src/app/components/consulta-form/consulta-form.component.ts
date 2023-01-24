@@ -3,6 +3,7 @@ import { Consulta } from '../../models/Consulta';
 import { ConsultasService } from '../../services/consultas.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -22,7 +23,10 @@ export class ConsultaFormComponent implements OnInit {
 
   consulta: Consulta = new Consulta;
 
-  constructor(private consulta_service: ConsultasService, private activatedRoute:ActivatedRoute, private router: Router) { }
+  constructor(private consulta_service: ConsultasService, 
+              private activatedRoute:ActivatedRoute, 
+              private router: Router,
+              private location:Location) { }
 
   ngOnInit(): void {
     this.id_patient = this.activatedRoute.snapshot.params['id_patient'];
@@ -52,9 +56,26 @@ export class ConsultaFormComponent implements OnInit {
        
 
   cancel(){
-    this.consulta.altura = '';
-    this.consulta.peso = '';
-    this.router.navigate(['consultas/' + this.id_patient ]);  
+    
+    if(this.consulta.altura != '' || this.consulta.peso != '' || this.consulta.fecha != '') {
+      Swal.fire({
+        title: 'Seguro?',
+        text: "Desea salir sin guardar los datos?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Salir!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.location.back();
+        }
+      })
+    } else {
+      this.location.back();
+    }  
+
+    //this.router.navigate(['consultas/' + this.id_patient ]);  
   }
 
 }
