@@ -157,13 +157,15 @@ export class AppointmentsListComponent implements OnInit {
           cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Turno liberado.',
-              'success'
-            )
-            setTimeout(() =>  location.reload(), 1500)
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Turno liberado',
+              showConfirmButton: false,
+              timer: 1500
+            })
           }
+          setTimeout(() =>  location.reload(), 1500)
         })
       }
     )
@@ -185,13 +187,15 @@ export class AppointmentsListComponent implements OnInit {
           cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Turno asignado.',
-              'success'
-            )
-            setTimeout(() => this.router.navigate(['/consultas/' + this.patient._id]), 1000)
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Turno asignado',
+              showConfirmButton: false,
+              timer: 1500
+            })
             }
+          setTimeout(() => this.router.navigate(['/consultas/' + this.patient._id]), 1000)
         })
 
       }
@@ -212,13 +216,15 @@ export class AppointmentsListComponent implements OnInit {
           cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Sobreturno bloqueado.',
-              'success'
-            )
-            setTimeout(() =>  location.reload(), 1500)
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Turno bloqueado',
+              showConfirmButton: false,
+              timer: 1500
+            })
           }
+          setTimeout(() =>  location.reload(), 1500)
         })
       }
     )
@@ -238,13 +244,15 @@ export class AppointmentsListComponent implements OnInit {
           cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Sobreturno desbloqueado.',
-              'success'
-            )
-            setTimeout(() =>  location.reload(), 1500)
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Turno desbloqueado',
+              showConfirmButton: false,
+              timer: 1500
+            })            
           }
+          setTimeout(() =>  location.reload(), 1500)
         })
       }
     )
@@ -297,14 +305,16 @@ export class AppointmentsListComponent implements OnInit {
       if (result.isConfirmed) {
         this.appointment_service.deleteAppointment(id)
           .subscribe(() =>{
-            Swal.fire(
-              'Hecho!',
-              'Sobreturno eliminado.',
-              'success'
-            )
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Sobreturno eliminado',
+              showConfirmButton: false,
+              timer: 1500
+            })
             setTimeout(() => window.location.reload(), 1500)
-            }
-          );
+          }
+        );
       }
     })
   }

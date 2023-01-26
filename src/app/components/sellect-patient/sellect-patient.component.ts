@@ -77,13 +77,15 @@ export class SellectPatientComponent implements OnInit {
           cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Turno asignado.',
-              'success'
-            )
-            setTimeout(() => this.router.navigate(['/appointments-list']), 1000)
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Turno asignado',
+              showConfirmButton: false,
+              timer: 1500
+            }) 
             }
+            setTimeout(() => this.router.navigate(['/appointments-list']), 1000)
         })
         
       }

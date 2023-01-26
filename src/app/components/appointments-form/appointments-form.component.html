@@ -1,23 +1,23 @@
-<form action="submit" ngNativeValidate>
+<form novalidate (ngSubmit)="request()" #f="ngForm">
     <div class="container">
         <div class="form-group">
             <div id="search-autocomplete" class="form-outline">
                 <label for="patient">Paciente</label>
-                <input type="search" id="patient" class="form-control" placeholder="{{subtitle}}" name="paciente" style="font-size: 15px;" [(ngModel)]= "selectedPatient" list="patients">
+                <input type="search" id="patient" class="form-control" placeholder="{{subtitle}}" name="paciente" style="font-size: 15px;" [(ngModel)]= "selectedPatient" list="patients" ngModel required>
             </div>
         </div>
         <datalist id="patients">
             <option *ngFor="let patient of patients" value="{{patient.nombre}} {{patient.apellido}}"></option>
         </datalist>   
         <div class="row padding">
-            <input type="date" class="form-control" name="date" id="inp-date" [(ngModel)]="appointment.fecha" required>
+            <input type="date" class="form-control" name="date" id="inp-date" [(ngModel)]="appointment.fecha" ngModel required>
         </div>
         <div class="row padding">
-            <input type="time" class="form-control" name="time" id="inp-time" [(ngModel)]="appointment.hora" required>
+            <input type="time" class="form-control" name="time" id="inp-time" [(ngModel)]="appointment.hora" ngModel required>
         </div>
         <div class="d-flex flex-row-reverse padding-top">
             <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
-                <button type="button" class="btn btn-primary" (click)="request()">Guardar</button>
+                <button type="submit"  [disabled]="f.invalid" class="btn btn-primary" (click)="request()">Guardar</button>
             </div>
             <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
                 <button type="button" class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
