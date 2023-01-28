@@ -7,6 +7,8 @@ import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 
 
 @Component({
@@ -23,6 +25,8 @@ export class PatientFormComponent implements OnInit {
   gender = ['Femenino', 'Masculino'];
   selected = 'Género';
   currentUser: Usuario;
+  today= moment().format('YYYY-MM-DD');
+
 
   constructor(private activatedRoute: ActivatedRoute, 
               private patients_service:PatientsService, 
@@ -31,6 +35,7 @@ export class PatientFormComponent implements OnInit {
               private location:Location) {}
 
   ngOnInit(): void {
+    console.log(this.today)
     this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.id = this.activatedRoute.snapshot.params['id'];
     this.route = this.activatedRoute.snapshot.params['route']
@@ -109,6 +114,12 @@ export class PatientFormComponent implements OnInit {
       this.location.back();
     }  
 
+  }
+
+  //date validation
+
+  isBefore(a:string) {
+    return moment(this.today).isBefore(a);
   }
 
 }

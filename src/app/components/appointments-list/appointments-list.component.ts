@@ -310,7 +310,7 @@ export class AppointmentsListComponent implements OnInit {
               icon: 'success',
               title: 'Sobreturno eliminado',
               showConfirmButton: false,
-              timer: 1500
+              timer: 1600
             })
             setTimeout(() => window.location.reload(), 1500)
           }

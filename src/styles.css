@@ -10,6 +10,15 @@ html{
     justify-content: center;
   }
 
+.alert {
+    color:rgb(247, 113, 113);
+    padding: 0px;
+}
+
+.alert-div {
+    height: 4px;
+}
+
 .card{
     margin-top: 2vh;
 }
@@ -19,5 +28,6 @@ html{
 }
 
 .padding{
-    padding: 1vw 2vw 1vw 2vw;
+    padding: 4vh 4vh ;
 }
+
