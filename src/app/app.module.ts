@@ -26,6 +26,7 @@ import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoginComponent } from './components/login/login.component';
 import { FilterByDatePipe } from './pipes/filter-by-date.pipe';
+import {DateValidatorDirective} from 'src/app/validations';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { FilterByDatePipe } from './pipes/filter-by-date.pipe';
     FilterPatientsPipe,
     SellectPatientComponent,
     LoginComponent,
-    FilterByDatePipe
+    FilterByDatePipe,
+    DateValidatorDirective
   ],
   imports: [
     BrowserModule,

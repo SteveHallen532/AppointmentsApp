@@ -35,28 +35,30 @@ export class PatientInfoComponent implements OnInit {
     }
 
     delete(id:string){
-      this.patients_service.deletePatient(id)
-      .subscribe(() =>{
-        Swal.fire({
-          title: 'Seguro?',
-          text: "Esta acción no se puede deshacer!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Eliminar!',
-          cancelButtonText: 'Cancelar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Pciente eliminado.',
-              'success'
-            )
-            setTimeout(() => this.router.navigate(['/patients-list']), 1000)
-          }
-        })  
-      });
+      Swal.fire({
+        title: 'Seguro?',
+        text: "Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.patients_service.deletePatient(id)
+          .subscribe(() =>{
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Paciente eliminado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+          setTimeout(() => this.router.navigate(['/patients-list']), 1000)
+        }
+      }) 
     }
 
     goToPatientForm() {

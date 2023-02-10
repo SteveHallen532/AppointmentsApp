@@ -1,9 +1,9 @@
-<form action="submit" novalidate (ngSubmit)="request()" #f="ngForm">
+<form action="submit" novalidate (ngSubmit)="request()" #f="ngForm" id="f">
     <div class="container">
         <div class="row padding">
             <input type="text" class="form-control" placeholder="Nombre" name="nombre" id="inp-nombre" [(ngModel)]="patient.nombre" #name="ngModel" pattern=
             "[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{3,10}[ ]{0,1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{0,10}[ ]{0,1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{0,10}" minlength="3" maxlength="32" required
-            [ngStyle]="{'border': name.invalid && (name.dirty || name.touched)? '1px solid red' : ''}">
+            [ngStyle]="{'border': name.invalid && (name.dirty || name.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert-div">
                     <p *ngIf="name.errors?.['required']" class="alert">
@@ -21,7 +21,7 @@
         <div class="row padding">
             <input type="text" class="form-control" placeholder="Apellido" name="apellido" id="inp-apellido" [(ngModel)]="patient.apellido" 
             #last="ngModel" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{2,10}[ ]{0,1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{0,10}[ ]{0,1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{0,10}" minlength="3" maxlength="32" required
-            [ngStyle]="{'border': last.invalid && (last.dirty || last.touched)? '1px solid red' : ''}">
+            [ngStyle]="{'border': last.invalid && (last.dirty || last.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="last.invalid && (last.dirty || last.touched)" class="alert-div">
                     <p *ngIf="last.errors?.['required']" class="alert">
@@ -38,7 +38,7 @@
         </div>
         <div class="row padding">
             <input type="tel" class="form-control" placeholder="Telefono" name="tel" id="inp-tel" [(ngModel)]="patient.telefono" #tel="ngModel" pattern="\d{10}" required
-             [ngStyle]="{'border': tel.invalid && (tel.dirty || tel.touched)? '1px solid red' : ''}">
+             [ngStyle]="{'border': tel.invalid && (tel.dirty || tel.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="tel.invalid && (tel.dirty || tel.touched)" class="alert-div">
                     <p *ngIf="tel.errors?.['required'] || tel.errors?.['pattern']" class="alert">
@@ -50,7 +50,7 @@
         <div class="row padding">
             <input type="email" class="form-control" placeholder="Email" name="email" id="inp-email" [(ngModel)]="patient.email" #email="ngModel"
             pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" minlength="5" maxlength="30" required
-            [ngStyle]="{'border': email.invalid && (email.dirty || email.touched)? '1px solid red' : ''}">
+            [ngStyle]="{'border': email.invalid && (email.dirty || email.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert-div">
                     <p *ngIf="email.errors?.['required']" class="alert">
@@ -64,7 +64,7 @@
         </div>
         <div class="row padding">
             <input type="text" class="form-control" placeholder="DNI" name="dni" id="inp-dni" [(ngModel)]="patient.dni" #dni="ngModel" pattern="\d{7,8}"
-            [ngStyle]="{'border': dni.invalid && (dni.dirty || dni.touched)? '1px solid red' : ''}">
+            [ngStyle]="{'border': dni.invalid && (dni.dirty || dni.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="alert-div">
                     <p *ngIf="dni.errors?.['pattern']" class="alert">
@@ -83,7 +83,7 @@
         </div>
         <div class="row padding">
             <input type="text" class="form-control" placeholder="Obra social" name="obra-social" id="inp-obra-social" [(ngModel)]="patient.obra_social" #obSoc="ngModel" 
-            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\d]{2,15}[ ]{0,1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\d]{0,15}" [ngStyle]="{'border': obSoc.invalid && (obSoc.dirty || obSoc.touched)? '1px solid red' : ''}">
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\d]{2,15}[ ]{0,1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\d]{0,15}" [ngStyle]="{'border': obSoc.invalid && (obSoc.dirty || obSoc.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="obSoc.invalid && (obSoc.dirty || obSoc.touched)" class="alert-div">
                     <p *ngIf="obSoc.errors?.['pattern']" class="alert">
@@ -94,7 +94,7 @@
         </div>
         <div class="row padding">
             <input type="text" class="form-control" placeholder="Numero Obra Social" name="num-obra-social" id="inp-num-obra-social" [(ngModel)]="patient.num_obra_social" #numObSoc="ngModel" 
-            pattern="\d{3,30}" [ngStyle]="{'border': numObSoc.invalid && (numObSoc.dirty || numObSoc.touched)? '1px solid red' : ''}">
+            pattern="\d{3,30}" [ngStyle]="{'border': numObSoc.invalid && (numObSoc.dirty || numObSoc.touched)? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="numObSoc.invalid && (numObSoc.dirty || numObSoc.touched)" class="alert-div">
                     <p *ngIf="numObSoc.errors?.['pattern']" class="alert">
@@ -109,20 +109,25 @@
             </div>
             <div class="padding-bottom">
                 <input type="date" class="form-control" name="birthday" id="inp-birthday" [(ngModel)]="patient.fecha_nacimiento" #date="ngModel"
-                [ngStyle]="{'border': isBefore(date.value) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}}>
-            <div class="alert-div">
-                <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
-                    <p class="alert">
-                        La fecha no puede ser posterior al día de hoy.
-                    </p>
+                [ngStyle]="{'border': isBefore(date.value) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01">
+                <div class="alert-div">
+                    <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
+                        <p class="alert">
+                            La fecha no puede ser posterior al día de hoy.
+                        </p>
+                    </div>
+                    <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
+                        <p class="alert">
+                            Fecha inválida.
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <div class="container">
             <div class="d-flex flex-row-reverse padding-top">
                 <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
-                    <input type="submit" class="btn btn-primary" (click)="request()" value="Guardar" [disabled]="f.invalid">
+                    <input type="submit" class="btn btn-primary" (click)="request()" value="Guardar" [disabled]="f.invalid || isBefore(date.value)">
                 </div>
                 <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
                     <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>

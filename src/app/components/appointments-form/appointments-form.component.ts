@@ -18,6 +18,7 @@ import * as moment from 'moment';
 })
 export class AppointmentsFormComponent implements OnInit {
 
+  today= moment().format('YYYY-MM-DD');
   id: string = '';
   idPatient ='';
   patients: Patient[] = [];
@@ -216,5 +217,23 @@ export class AppointmentsFormComponent implements OnInit {
     }
 
   }
+
+  //validations
+
+  isBefore(a:string) {
+    return moment(a).isBefore(this.today);
+  }
+
+  timeIsBefore() {
+    let pickedDay = this.appointment.fecha;
+    let pickedTime = this.appointment.hora;
+    if(pickedDay == this.today && this.appointment.hora != '') {
+      return moment(moment(pickedDay + ' ' + pickedTime).format('DD/MM/YYYY HH:mm')).isBefore(moment().format('DD/MM/YYYY HH:mm'))
+    } else {
+      return false;
+    }
+
+  }
+
 
 }

@@ -1,20 +1,71 @@
-<form action="submit" ngNativeValidate>
+<form action="submit" novalidate (ngSubmit)="saveConsulta()" #f="ngForm">
     <div class="container">
-        <div class="form-group">
+        <div class="form-group padding">
             <label for="date">Fecha:</label>
-            <input type="date" class="form-control" name="fecha" id="date" [(ngModel)]="consulta.fecha">
+            <input type="date" class="form-control" name="fecha" id="date" [(ngModel)]="consulta.fecha" #date="ngModel"
+            [ngStyle]="{'border': (date.invalid || isBefore(date.value)) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01" required>
+            <div class="alert-div">
+                <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        La fecha no puede ser posterior al día de hoy.
+                    </p>
+                </div>
+                <div *ngIf="date.errors?.['required'] && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        Completa este campo.
+                    </p>
+                </div>
+                <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        Fecha inválida.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group padding">
             <label for="inp-altura">Altura:</label>
-            <input type="text" class="form-control" name="altura" id="inp-altura" [(ngModel)]="consulta.altura" required>
+            <input type="text" class="form-control" name="altura" id="inp-altura" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.altura" #height="ngModel" required
+            [ngStyle]="{'border': (height.invalid && (height.dirty || height.touched)) || (minMaxValidation(minHeight, height.value, maxHeight) == false && (height.dirty || height.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="height.dirty || height.touched" class="alert-div">
+                    <div *ngIf="height.invalid">
+                        <p *ngIf="height.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="height.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(minHeight, height.value, maxHeight) == false && !height.errors?.['pattern'] && !height.errors?.['required']" class="alert">
+                        La altura puede estar entre 30 y 250cm.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group padding">
             <label for="inp-peso">Peso:</label>
-            <input type="text" class="form-control" name="peso" id="inp-peso" [(ngModel)]="consulta.peso" required>
+            <input type="text" class="form-control" name="peso" id="inp-peso" placeholder="0.00Kg" pattern="[0]{0,1}[1-9]{1,3}[.]{0,1}[\d]{0,2}" [(ngModel)]="consulta.peso" #weight="ngModel" required
+            [ngStyle]="{'border': (weight.invalid && (weight.dirty || weight.touched)) || (minMaxValidation(minWeight, weight.value, maxWeight) == false && (weight.dirty || weight.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="weight.dirty || weight.touched" class="alert-div">
+                    <div *ngIf="weight.invalid">
+                        <p *ngIf="weight.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="weight.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(minWeight, weight.value, maxWeight) == false && !weight.errors?.['pattern'] && !weight.errors?.['required']" class="alert">
+                        El peso puede estar entre 0.5 y 400Kg.
+                    </p>
+                </div>
+            </div>
             <div class="container">
                 <div class="d-flex flex-row-reverse padding-top">
                     <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
-                        <input type="submit" class="btn btn-primary" (click)="saveConsulta()" value="Guardar">
+                        <input type="submit" class="btn btn-primary" (click)="saveConsulta()" value="Guardar" [disabled]="f.invalid || minMaxValidation(minHeight, height.value, maxHeight) == false ||
+                        minMaxValidation(minWeight, weight.value, maxWeight) == false">
                     </div>
                     <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
                         <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>

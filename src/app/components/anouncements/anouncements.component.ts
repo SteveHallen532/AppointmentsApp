@@ -36,29 +36,31 @@ export class AnouncementsComponent implements OnInit {
   }
 
   delete(id:string){
-    this.announcement_service.deleteAnnouncement(id)
-    .subscribe(() =>{
-      Swal.fire({
-        title: 'Seguro?',
-        text: "Esta acción no se puede deshacer!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Eliminar!',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Hecho!',
-            'Anuncio eliminado.',
-            'success'
-          )
-          setTimeout(() => window.location.reload(), 1000)
-        }
-      })
+    Swal.fire({
+      title: 'Seguro?',
+      text: "Esta acción no se puede deshacer!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.announcement_service.deleteAnnouncement(id)
+        .subscribe(() =>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Eliminado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          setTimeout(() => window.location.reload(), 1000);
+          }
+        );
       }
-    );
+    })
   }
 
   newAnnouncement() {

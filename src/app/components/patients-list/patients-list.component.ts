@@ -54,11 +54,13 @@ export class PatientsListComponent implements OnInit {
       if (result.isConfirmed) {
         this.patients_service.deletePatient(id)
           .subscribe(() =>{
-            Swal.fire(
-              'Eliminado!',
-              'Paciente eliminado.',
-              'success'
-            )
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Paciente eliminado',
+              showConfirmButton: false,
+              timer: 1500
+            })
             setTimeout(() => window.location.reload(), 1000)
             }
           );

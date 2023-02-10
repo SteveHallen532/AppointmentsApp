@@ -33,7 +33,9 @@ const routes: Routes = [
   {path:'patients-list', component: PatientsListComponent, canActivate: [AuthGuard]},
   {path:'anouncements', component: AnouncementsComponent, canActivate: [AuthGuard]},
   {path:'', redirectTo: '/home', pathMatch: 'full' },
-  {path:'consulta-form/:id_patient/:id/:name/:last', component:ConsultaFormComponent, canActivate: [AuthGuard]},
+  {path:'consulta-form/:id_patient/:id/:id_consulta', component:ConsultaFormComponent, canActivate: [AuthGuard]},
+  {path:'consulta-form/:id_patient/:id', component:ConsultaFormComponent, canActivate: [AuthGuard]},
+
   {path:'consultas/:id', component: ConsultasComponent, canActivate: [AuthGuard]},
   {path:'medical-history-form/:id/:id_patient', component: MedicalHistoryFormComponent, canActivate: [AuthGuard]},
   {path:'appointments-list', component: AppointmentsListComponent, canActivate: [AuthGuard]},

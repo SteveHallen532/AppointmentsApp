@@ -1,4 +1,9 @@
-<div class="container">
+<div class="d-flex justify-content-center" *ngIf="loading == true">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<div class="container" *ngIf="loading == false">
     <div class="row">
         <div class="col-10 col-lg-11">
             <p class="h1 text-center">Pacientes</p>
@@ -12,14 +17,8 @@
             </button>
         </div>
     </div>
-
     <div class="col-10 col-lg-11 search-input">
         <input class="form-control" type="text" placeholder="{{subtitle}}"  style="font-size: 15px;" [(ngModel)]= "filterargs">
-    </div>
-    <div class="d-flex justify-content-center" *ngIf="loading == true">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
     </div>
     <div class="list-group padding-top" *ngFor="let patient of patients | filterPatients: filterargs">
         <div class="row">

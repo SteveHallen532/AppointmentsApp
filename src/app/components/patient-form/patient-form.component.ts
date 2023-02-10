@@ -27,7 +27,6 @@ export class PatientFormComponent implements OnInit {
   currentUser: Usuario;
   today= moment().format('YYYY-MM-DD');
 
-
   constructor(private activatedRoute: ActivatedRoute, 
               private patients_service:PatientsService, 
               private router: Router,
@@ -35,7 +34,6 @@ export class PatientFormComponent implements OnInit {
               private location:Location) {}
 
   ngOnInit(): void {
-    console.log(this.today)
     this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.id = this.activatedRoute.snapshot.params['id'];
     this.route = this.activatedRoute.snapshot.params['route']
@@ -65,31 +63,34 @@ export class PatientFormComponent implements OnInit {
     if(this.id == "new"){ 
       if(this.patient.nombre != '' && this.patient.apellido != '') {
         this.patient.organizacion = this.currentUser.organizacion;
-        this.patients_service.newPatient(this.patient)
-      .subscribe(() =>{
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Guardado',
+          showConfirmButton: false,
+          timer: 1500 })
+        .then(() =>{
+          this.patients_service.newPatient(this.patient).subscribe(()=>{
+          this.location.back();
+          })
+        })
+        //setTimeout(() => this.location.back(), 1000);
+      }
+    } else {
+      if(this.patient.nombre != '' && this.patient.apellido != '') {
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Guardado',
           showConfirmButton: false,
           timer: 1500
+        }).then(()=>{
+          this.patients_service.updatePatient(this.id, this.patient)
+          .subscribe(() =>{
+            this.location.back();
+          });
         })
-        setTimeout(() => this.router.navigate(['/patients-list']), 1000);
-        });
-      }
-    } else {
-      if(this.patient.nombre != '' && this.patient.apellido != '') {
-        this.patients_service.updatePatient(this.id, this.patient)
-        .subscribe(() =>{
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Guardado',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          setTimeout(() => this.location.back(), 1000);  
-        });
+          //setTimeout(() => this.location.back(), 1000);    
       }
     }    
   }
@@ -99,7 +100,7 @@ export class PatientFormComponent implements OnInit {
     if(this.patient.nombre != '' && this.patient.apellido != '') {
       Swal.fire({
         title: 'Seguro?',
-        text: "Desea salir sin guardar los datos?",
+        text: "Desea salir sin guardar los cambios?",
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -120,6 +121,10 @@ export class PatientFormComponent implements OnInit {
 
   isBefore(a:string) {
     return moment(this.today).isBefore(a);
+  }
+
+  outOfRange(a:string) {
+    return moment(a).isBefore(moment('01/01/1920'));
   }
 
 }

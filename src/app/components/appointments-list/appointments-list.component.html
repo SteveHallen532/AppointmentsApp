@@ -1,94 +1,97 @@
-<div class="container">
-    <div *ngIf="appointmentsInput.length <= 0">
-        <p class="h1">Turnos</p>
+<div class="d-flex justify-content-center" *ngIf="loading == true">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
-    <div class="row">
-        <div clas="col-2">
-            <p class="h6">Filtrar por fecha</p>
-           <div class="row">
-            <div class="col-3">
-                <input type="date" class="form-control" [(ngModel)]="date1">
+</div>
+<div *ngIf="loading == false">
+    <div class="container">
+        <div *ngIf="appointmentsInput.length <= 0">
+            <p class="h1">Turnos</p>
+        </div>
+        <div class="row">
+            <div clas="col-2">
+                <p class="h6">Filtrar por fecha</p>
+               <div class="row">
+                <div class="col-3">
+                    <input type="date" class="form-control" [(ngModel)]="date1">
+                </div>
+                <div class="col-3">
+                    <input type="date" class="form-control" [(ngModel)]="date2">
+                </div>
+               </div>
             </div>
-            <div class="col-3">
-                <input type="date" class="form-control" [(ngModel)]="date2">
+            <div class="d-flex justify-content-end" *ngIf="appointmentsInput.length <= 0">
+                <button class="btn btn-secondary" (click)="squeezeIn()">Sobre Turno</button>
             </div>
-           </div>
         </div>
-        <div class="d-flex justify-content-end" *ngIf="appointmentsInput.length <= 0">
-            <button class="btn btn-secondary" (click)="squeezeIn()">Sobre Turno</button>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center" *ngIf="loading == true">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-    <div *ngIf="appointments.length > 0">
-        <div class="list-group padding-top">
-            <div *ngFor="let date of dates | filterByDate: date1 : date2">
-                <p class="h5 capitalize">{{calendarize(date)}}</p>
-                <div  *ngFor="let appointment of appointments">
-                    <div *ngIf="isSameDate(date, appointment.fecha)">
-                        <div class="row">
-                            <div class="col-7 col-sm-8 col-md-9 col-lg-10">
-                                <div [ngStyle]="{'background-color': appointment.sobreturno == true ? 'green': appointment.asignado == true && appointment.confirmado == true? 'LightSteelBlue': appointment.enabled == false? 'grey': appointment.asignado == true? 'PowderBlue': 'white'}" class="list-group-item list-group-item-action">{{appointment.hora}} {{appointment.patient?.nombre}} {{appointment.patient?.apellido}}</div>
-                            </div>
-                            <div class="col-3 col-lg-2" *ngIf="appointment.asignado == true; else elseBlock">
-                                <div class="row" *ngIf="appointment.sobreturno == false; else elseBlock1">
-                                    <div class="col-6 col-xl-5 padding-left">
-                                        <button class="btn btn-secondary" (click)="unAssign(appointment._id)">Liberar</button>
+        <div *ngIf="appointments.length > 0">
+            <div class="list-group padding-top">
+                <div *ngFor="let date of dates | filterByDate: date1 : date2">
+                    <p class="h5 capitalize">{{calendarize(date)}}</p>
+                    <div  *ngFor="let appointment of appointments">
+                        <div *ngIf="isSameDate(date, appointment.fecha)">
+                            <div class="row">
+                                <div class="col-7 col-sm-8 col-md-9 col-lg-10">
+                                    <div [ngStyle]="{'background-color': appointment.sobreturno == true ? 'green': appointment.asignado == true && appointment.confirmado == true? 'LightSteelBlue': appointment.enabled == false? 'grey': appointment.asignado == true? 'PowderBlue': 'white'}" class="list-group-item list-group-item-action">{{appointment.hora}} {{appointment.patient?.nombre}} {{appointment.patient?.apellido}}</div>
+                                </div>
+                                <div class="col-3 col-lg-2" *ngIf="appointment.asignado == true; else elseBlock">
+                                    <div class="row" *ngIf="appointment.sobreturno == false; else elseBlock1">
+                                        <div class="col-6 col-xl-5 padding-left">
+                                            <button class="btn btn-secondary" (click)="unAssign(appointment._id)">Liberar</button>
+                                        </div>
+                                        <div *ngIf="appointment.confirmado == false; else elseBlockTrue" class="col-6">
+                                            <button class="btn btn-secondary" (click)="confirm(appointment._id, appointment)">Confirmar</button>
+                                        </div>
+                                        <ng-template #elseBlockTrue>
+                                            <div class="col-6 col-xl-5">
+                                                <button class="btn btn-secondary" (click)="disConfirm(appointment._id, appointment)">Desconfirmar</button>
+                                            </div>
+                                        </ng-template>
                                     </div>
-                                    <div *ngIf="appointment.confirmado == false; else elseBlockTrue" class="col-6">
-                                        <button class="btn btn-secondary" (click)="confirm(appointment._id, appointment)">Confirmar</button>
-                                    </div>
-                                    <ng-template #elseBlockTrue>
-                                        <div class="col-6 col-xl-5">
-                                            <button class="btn btn-secondary" (click)="disConfirm(appointment._id, appointment)">Desconfirmar</button>
+                                    <ng-template #elseBlock1>
+                                        <div class="row">
+                                            <div class="col-6 col-xl-5 padding-left">
+                                                <button class="btn btn-secondary" (click)="delete(appointment._id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                      </svg>
+                                                </button>
+                                            </div> 
+                                            <div class="col-6 col-xl-5">
+                                                <button class="btn btn-secondary" (click)="edit(appointment._id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                      </svg>
+                                                </button>
+                                            </div>
                                         </div>
                                     </ng-template>
                                 </div>
-                                <ng-template #elseBlock1>
-                                    <div class="row">
-                                        <div class="col-6 col-xl-5 padding-left">
-                                            <button class="btn btn-secondary" (click)="delete(appointment._id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                                                  </svg>
-                                            </button>
-                                        </div> 
-                                        <div class="col-6 col-xl-5">
-                                            <button class="btn btn-secondary" (click)="edit(appointment._id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                                  </svg>
-                                            </button>
+                                <ng-template #elseBlock>
+                                    <div class="col-5 col-sm-4 col-md-3 col-lg-2">
+                                        <div class="row" *ngIf="appointment.enabled == true, else elseBlock3">
+                                            <div class="col-6 padding-left col-xl-5">
+                                                <button class="btn btn-primary" (click)="select(appointment._id)" >Asignar</button>
+                                            </div>
+                                            <div class="col-6 col-xl-5">
+                                                <button class="btn btn-primary" (click)="lock(appointment._id, appointment)" >Bloquear</button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <ng-template #elseBlock3>   
+                                        <div class="col-3 col-lg-2">
+                                            <button class="btn btn-secondary" (click)="unLock(appointment._id, appointment)">Desbloquear</button>
+                                        </div>   
+                                    </ng-template>
                                 </ng-template>
                             </div>
-                            <ng-template #elseBlock>
-                                <div class="col-5 col-sm-4 col-md-3 col-lg-2">
-                                    <div class="row" *ngIf="appointment.enabled == true, else elseBlock3">
-                                        <div class="col-6 padding-left col-xl-5">
-                                            <button class="btn btn-primary" (click)="select(appointment._id)" >Asignar</button>
-                                        </div>
-                                        <div class="col-6 col-xl-5">
-                                            <button class="btn btn-primary" (click)="lock(appointment._id, appointment)" >Bloquear</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ng-template #elseBlock3>   
-                                    <div class="col-3 col-lg-2">
-                                        <button class="btn btn-secondary" (click)="unLock(appointment._id, appointment)">Desbloquear</button>
-                                    </div>   
-                                </ng-template>
-                            </ng-template>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
     </div>
     
 </div>

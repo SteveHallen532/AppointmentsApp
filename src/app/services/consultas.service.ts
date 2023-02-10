@@ -19,4 +19,8 @@ export class ConsultasService {
     return this.http.post(`${environment.apiUrl}/historia_clinica/`+id+`/consultas`, consulta)
   }
 
+  getConsulta(id:string, id_consulta:string):Observable<Consulta>{
+    return this.http.get<Consulta>(`${environment.apiUrl}/historia_clinica/`+id+`/consultas/`+id_consulta)
+  }
+
 }

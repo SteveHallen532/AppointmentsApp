@@ -51,7 +51,7 @@ export class MedicalHistoryFormComponent implements OnInit {
       () => {
         Swal.fire({
           title: 'Editar?',
-          text: "Editar descripcion de historia clínica",
+          text: "Guardar cambios en Historia Clínica?",
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
@@ -59,12 +59,14 @@ export class MedicalHistoryFormComponent implements OnInit {
           cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Hecho!',
-              'Historia clínica editada.',
-              'success'
-            )
-            setTimeout(() => this.router.navigate(['medical-history/' + this.id_medical_History + '/' + this.patient._id]), 1000)
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Guardado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.router.navigate(['medical-history/' + this.id_medical_History + '/' + this.patient._id])
           }
         })
       }

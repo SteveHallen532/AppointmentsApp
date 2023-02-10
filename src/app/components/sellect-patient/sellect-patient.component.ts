@@ -64,32 +64,30 @@ export class SellectPatientComponent implements OnInit {
   }
 
   assign(patient:Patient){
-    this.appointment_service.assign(this.appointment._id, patient._id, this.appointment)
+    Swal.fire({
+      title: 'Asignar?',
+      text: "Asignar turno a " + patient.nombre + ' ' + patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Asignar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointment_service.assign(this.appointment._id, patient._id, this.appointment)
     .subscribe(
       () =>{
         Swal.fire({
-          title: 'Asignar?',
-          text: "Asignar turno a " + patient.nombre + ' ' + patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Asignar!',
-          cancelButtonText: 'Cancelar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Turno asignado',
-              showConfirmButton: false,
-              timer: 1500
-            }) 
-            }
-            setTimeout(() => this.router.navigate(['/appointments-list']), 1000)
+          position: 'center',
+          icon: 'success',
+          title: 'Turno asignado',
+          showConfirmButton: false,
+          timer: 1500
+          })   
         })
-        
       }
-    )
+      this.router.navigate(['/appointments-list']);
+    })
   }
 
 }

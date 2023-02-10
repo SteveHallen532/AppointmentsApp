@@ -55,7 +55,7 @@ export class ConsultasComponent implements OnInit {
       result =>{
         this.consultas = result;
         this.loading = false;
-        this.getAppontments();
+        this.filterDatesConsultas(this.consultas);
       }
     );
   }
@@ -96,8 +96,22 @@ export class ConsultasComponent implements OnInit {
     this.getPatient();
   }
 
-  goToForm() {
-    this.router.navigate(['/consulta-form', this.id_patient, this.medicalHistory._id ,this.patient.nombre, this.patient.apellido]);
+  filterDatesConsultas(arr:Consulta[]) {
+    arr = arr.sort((a:Consulta, b:Consulta) => {
+      let momentA = moment(a.fecha).format("YYYY MM DD");
+      let momentB = moment(b.fecha).format("YYYY MM DD"); 
+      return moment(momentA).isSameOrAfter(momentB) ? -1 : 1; 
+    });
+    this.consultas = arr;
+    this.getAppontments();
+  }
+
+  goToForm(id_consulta?:string) {
+    if(id_consulta){
+      this.router.navigate(['/consulta-form', this.id_patient, this.medicalHistory._id , id_consulta]);
+    } else {
+      this.router.navigate(['/consulta-form', this.id_patient, this.medicalHistory._id]);
+    }
   }
 
   goToPatientInfo() {

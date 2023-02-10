@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Consulta } from '../../models/Consulta';
 import { ConsultasService } from '../../services/consultas.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import * as moment from 'moment';
+import { PatientsService } from 'src/app/services/patients.service';
+import { Patient } from 'src/app/models/Patient';
 
 
 @Component({
@@ -12,48 +15,65 @@ import { Location } from '@angular/common';
   styleUrls: ['./consulta-form.component.css']
 })
 export class ConsultaFormComponent implements OnInit {
-
+ 
+  today = moment().format('YYYY-MM-DD');
   id: string = '';
   id_patient = '';
-  name: string = '';
-  last: string = '';
-  /*peso: string;
-    altura: string;
-    _id_historia_clinica: string;*/
-
+  id_consulta = '';
+  patient: Patient = new Patient;
   consulta: Consulta = new Consulta;
 
-  constructor(private consulta_service: ConsultasService, 
+  constructor(private consulta_service: ConsultasService,
+              private patient_service: PatientsService, 
               private activatedRoute:ActivatedRoute, 
               private router: Router,
               private location:Location) { }
 
   ngOnInit(): void {
+    this.consulta.fecha = this.today;
     this.id_patient = this.activatedRoute.snapshot.params['id_patient'];
     this.id = this.activatedRoute.snapshot.params['id'];
-    this.name = this.activatedRoute.snapshot.params['name'];
-    this.last = this.activatedRoute.snapshot.params['last'];
+    this.id_consulta = this.activatedRoute.snapshot.params['id_consulta']
     this.consulta.historia_clinica._id = this.id;
+    this.getPatient()
+  }
+
+  getConsulta() {
+    if(this.id_consulta != undefined && this.id_consulta != '') {
+      this.consulta_service.getConsulta(this.id, this.id_consulta).subscribe(
+        (result)=> {
+          this.consulta = result;
+        }
+      )
+    }
+  }
+
+  getPatient() {
+    this.patient_service.getPatient(this.id_patient).subscribe(
+      (result)=>{
+        this.patient = result;
+        this.getConsulta()
+      }
+    )
   }
 
   saveConsulta() {
     if(this.consulta.altura != '' && this.consulta.peso != '') {
-
-      this.consulta_service.newConsultas(this.consulta, this.id)
-      .subscribe(() =>{
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Datos guardados',
-          showConfirmButton: false,
-          timer: 1500
-          })
-        setTimeout(() =>  this.router.navigate(['consultas/' + this.id_patient]), 1000)
-        }
-      );
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Datos guardados',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
+        this.consulta_service.newConsultas(this.consulta, this.id)
+        .subscribe(() =>{
+           this.router.navigate(['consultas/' + this.id_patient]);
+          }
+        )
+      })
     }
-  }
-       
+  }   
 
   cancel(){
     
@@ -76,6 +96,30 @@ export class ConsultaFormComponent implements OnInit {
     }  
 
     //this.router.navigate(['consultas/' + this.id_patient ]);  
+  }
+
+  //Validation
+  minHeight= 30; 
+  maxHeight = 250;
+
+  minWeight = 0.5;
+  maxWeight= 400;
+
+  isBefore(a:string) {
+    return moment(this.today).isBefore(a);
+  }
+
+  outOfRange(a:string) {
+    return moment(a).isBefore(moment('01/01/1920'));
+  }
+
+  minMaxValidation(a, b, c){
+    
+    if (a <= Number(b) && Number(b) <= c) {
+      return true;
+    } else {
+      return false
+    }
   }
 
 }

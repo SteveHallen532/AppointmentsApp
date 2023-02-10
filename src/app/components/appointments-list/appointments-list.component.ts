@@ -144,118 +144,111 @@ export class AppointmentsListComponent implements OnInit {
   }
 
   unAssign(id:string){
-    this.appointment_service.unAssign(id, this.appointment)
-    .subscribe(
-      () =>{
-        Swal.fire({
-          title: 'Liberar?',
-          text: "Liberar turno?",
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Liberar!',
-          cancelButtonText: 'Cancelar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Turno liberado',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }
+    Swal.fire({
+      title: 'Liberar?',
+      text: "Liberar turno?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Liberar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointment_service.unAssign(id, this.appointment)
+        .subscribe(() =>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Turno liberado',
+            showConfirmButton: false,
+            timer: 1500
+          })
           setTimeout(() =>  location.reload(), 1500)
         })
       }
-    )
+    })
+
+
+    
   }
 
   // Request hecha desde consultas/id_patient
   assign(){
-    this.appointment_service.assign(this.appointment._id, this.patient._id, this.appointment)
-    .subscribe(
-      () =>{
-
-        Swal.fire({
-          title: 'Asignar?',
-          text: "Asignar turno a " + this.patient.nombre + ' ' + this.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Asignar!',
-          cancelButtonText: 'Cancelar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Turno asignado',
-              showConfirmButton: false,
-              timer: 1500
-            })
-            }
+    Swal.fire({
+      title: 'Asignar?',
+      text: "Asignar turno a " + this.patient.nombre + ' ' + this.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Asignar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointment_service.assign(this.appointment._id, this.patient._id, this.appointment)
+        .subscribe(() =>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Turno asignado',
+            showConfirmButton: false,
+            timer: 1500
+          })
           setTimeout(() => this.router.navigate(['/consultas/' + this.patient._id]), 1000)
         })
-
       }
-    )
+    })
   }
 
   lock(id:string, appointment:Appointment) {
-    this.appointment_service.lock(id, appointment)
-    .subscribe(
-      () => {
-        Swal.fire({
-          title: 'Bloquear?',
-          text: "Bloquear turno?",
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Bloquear!',
-          cancelButtonText: 'Cancelar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Turno bloqueado',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }
+    Swal.fire({
+      title: 'Bloquear?',
+      text: "Bloquear turno?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Bloquear!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointment_service.lock(id, appointment)
+        .subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Turno bloqueado',
+            showConfirmButton: false,
+            timer: 1500
+          })
           setTimeout(() =>  location.reload(), 1500)
         })
       }
-    )
+    })
   }
 
   unLock(id:string, appointment:Appointment) {
-    this.appointment_service.unLock(id, appointment)
-    .subscribe(
-      () => {
-        Swal.fire({
-          title: 'Desbloquear?',
-          text: "Desbloquear turno?",
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Desloquear!',
-          cancelButtonText: 'Cancelar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Turno desbloqueado',
-              showConfirmButton: false,
-              timer: 1500
-            })            
-          }
-          setTimeout(() =>  location.reload(), 1500)
-        })
+    Swal.fire({
+      title: 'Desbloquear?',
+      text: "Desbloquear turno?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Desloquear!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointment_service.unLock(id, appointment)
+        .subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Turno desbloqueado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          setTimeout(() =>  location.reload(), 1500)      
+        })       
       }
-    )
+    })  
   }
 
   confirm(id:string, appointment:Appointment) {

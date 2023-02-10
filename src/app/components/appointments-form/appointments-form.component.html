@@ -3,21 +3,53 @@
         <div class="form-group">
             <div id="search-autocomplete" class="form-outline">
                 <label for="patient">Paciente</label>
-                <input type="search" id="patient" class="form-control" placeholder="{{subtitle}}" name="paciente" style="font-size: 15px;" [(ngModel)]= "selectedPatient" list="patients" ngModel required>
+                <input type="search" id="patient" class="form-control" placeholder="{{subtitle}}" name="paciente" style="font-size: 15px;" [(ngModel)]= "selectedPatient" list="patients" ngModel 
+                [ngStyle]="{'border': patient.invalid && (patient.dirty || patient.touched)? '1px solid red' : ''}" #patient="ngModel" autocomplete="off" required>
+                 <div class="alert-div">
+                     <div *ngIf="patient.invalid && (patient.dirty || patient.touched)" class="alert-div">
+                         <p *ngIf="patient.errors?.['required']" class="alert">
+                             Completa este campo.
+                         </p>
+                     </div>
+                 </div>
             </div>
         </div>
         <datalist id="patients">
             <option *ngFor="let patient of patients" value="{{patient.nombre}} {{patient.apellido}}"></option>
         </datalist>   
         <div class="row padding">
-            <input type="date" class="form-control" name="date" id="inp-date" [(ngModel)]="appointment.fecha" ngModel required>
+            <input type="date" class="form-control" name="date" id="inp-date" [(ngModel)]="appointment.fecha" ngModel [ngStyle]="{'border': date.invalid && (date.dirty || date.touched) || 
+            isBefore(date.value) && (date.dirty || date.touched)? '1px solid red' : ''}" 
+           #date="ngModel" autocomplete="off" required>
+            <div class="alert-div">
+                <div *ngIf="date.invalid && (date.dirty || date.touched) || isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p *ngIf="date.errors?.['required']" class="alert">
+                        Completa este campo.
+                    </p>
+                    <p *ngIf="isBefore(date.value)" class="alert">
+                        La fecha no puede ser anterior al dia de hoy.
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="row padding">
-            <input type="time" class="form-control" name="time" id="inp-time" [(ngModel)]="appointment.hora" ngModel required>
+            <input type="time" class="form-control" name="time" id="inp-time" [(ngModel)]="appointment.hora" ngModel [ngStyle]="{'border': time.invalid && (time.dirty || time.touched) || 
+            timeIsBefore() && (time.dirty || time.touched)? '1px solid red' : ''}" 
+            #time="ngModel" autocomplete="off" required>
+             <div class="alert-div">
+                 <div *ngIf="time.invalid && (time.dirty || time.touched) || timeIsBefore() && (time.dirty || time.touched)" class="alert-div">
+                     <p *ngIf="time.errors?.['required']" class="alert">
+                         Completa este campo.
+                     </p>
+                     <p *ngIf="timeIsBefore() && (time.dirty || time.touched)" class="alert">
+                        La hora no puede ser anterior a la hora actual.
+                    </p>
+                 </div>
+             </div>
         </div>
         <div class="d-flex flex-row-reverse padding-top">
             <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
-                <button type="submit"  [disabled]="f.invalid" class="btn btn-primary" (click)="request()">Guardar</button>
+                <button type="submit"  [disabled]="f.invalid" class="btn btn-primary" (click)="request()" [disabled]="f.invalid">Guardar</button>
             </div>
             <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
                 <button type="button" class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
