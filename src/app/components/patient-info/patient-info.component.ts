@@ -4,7 +4,7 @@ import { Patient } from '../../models/Patient';
 import { PatientsService } from '../../services/patients.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -17,7 +17,10 @@ export class PatientInfoComponent implements OnInit {
   id: string = '';
   patient: Patient = new Patient;
   
-  constructor(private activatedRoute: ActivatedRoute, private patients_service:PatientsService, private router:Router) {}
+  constructor(private activatedRoute: ActivatedRoute, 
+              private patients_service:PatientsService, 
+              private router:Router,
+              private location:Location) {}
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
@@ -63,6 +66,10 @@ export class PatientInfoComponent implements OnInit {
 
     goToPatientForm() {
       this.router.navigate(['/patient-form', this.patient._id, '/patient-info'])
+    }
+
+    back() {
+      this.location.back();
     }
 
   }

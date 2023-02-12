@@ -9,6 +9,7 @@ import { Appointment } from '../../models/Appointment';
 import { PatientsService } from '../../services/patients.service';
 import { Patient } from '../../models/Patient';
 import * as moment from 'moment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-consultas',
@@ -33,7 +34,13 @@ export class ConsultasComponent implements OnInit {
 
   appointmentss: Appointment[] = [];
 
-  constructor(private patient_service:PatientsService, private appointment_service: AppointmentsService, private router:Router, private activatedRoute: ActivatedRoute, private consultas_service: ConsultasService, private medical_history_service: MedicalHistoryService) { }
+  constructor(private patient_service:PatientsService, 
+              private appointment_service: AppointmentsService, 
+              private router:Router, 
+              private activatedRoute: ActivatedRoute, 
+              private consultas_service: ConsultasService, 
+              private medical_history_service: MedicalHistoryService,
+              private location:Location) { }
 
   ngOnInit(): void {
     this.id_patient = this.activatedRoute.snapshot.params['id'];    
@@ -125,4 +132,9 @@ export class ConsultasComponent implements OnInit {
   goToAppointmentsList(id:string) {
     this.router.navigate(['/appointments-list/', this.id_patient])
   }
+
+  back() {
+    this.router.navigate(['/patients-list/'])
+    }
+
 }

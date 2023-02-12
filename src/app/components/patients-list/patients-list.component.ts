@@ -5,6 +5,7 @@ import { PatientsService } from '../../services/patients.service';
 import Swal from 'sweetalert2'
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Usuario } from 'src/app/models/Usuario';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-patients-list',
@@ -23,7 +24,8 @@ export class PatientsListComponent implements OnInit {
 
   constructor(private patients_service:PatientsService, 
               private router:Router,
-              private auth_service: AuthenticationService
+              private auth_service: AuthenticationService,
+              private location:Location
               ) { }
 
   ngOnInit(): void {
@@ -81,6 +83,10 @@ export class PatientsListComponent implements OnInit {
   goToEditPatient(id:string) {
     this.router.navigate(['/patient-form', id, '/patients-list'])
   }
+
+  back() {
+    this.router.navigate(['/home'])
+    }
 
 }
 

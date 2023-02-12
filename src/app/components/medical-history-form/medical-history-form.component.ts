@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PatientsService } from '../../services/patients.service';
 import { Patient } from '../../models/Patient';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-medical-history-form',
@@ -18,7 +19,11 @@ export class MedicalHistoryFormComponent implements OnInit {
   id_medical_History: string = '';
   id_patient = '';
 
-  constructor(private medical_history_service: MedicalHistoryService, private router:Router, private activatedRoute:ActivatedRoute, private patient_service: PatientsService) { }
+  constructor(private medical_history_service: MedicalHistoryService, 
+              private router:Router, 
+              private activatedRoute:ActivatedRoute, 
+              private patient_service: PatientsService,
+              private location:Location) { }
 
   ngOnInit(): void {
     this.id_patient = this.activatedRoute.snapshot.params['id_patient'];
@@ -75,5 +80,9 @@ export class MedicalHistoryFormComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['medical-history/' + this.id_medical_History + '/' + this.patient._id]);
+  }
+
+  back() {
+    this.location.back();
   }
 }

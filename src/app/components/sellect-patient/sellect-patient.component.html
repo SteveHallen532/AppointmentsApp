@@ -1,15 +1,25 @@
-<div class="search-input form-group">
-    <input class="form-control" type="text" placeholder="{{subtitle}}"  style="font-size: 15px;" [(ngModel)]= "filterargs">
+<div>
+    <button class="btn btn-primary" (click)="back()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+          </svg>
+    </button>
 </div>
-<div class="d-flex justify-content-center" *ngIf="loading == true">
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+<div class="container padding">
+    <div class="search-input form-group">
+        <input class="form-control" type="text" placeholder="{{subtitle}}"  style="font-size: 15px;" [(ngModel)]= "filterargs">
     </div>
-</div>
-<div class="list-group padding-top" *ngFor= "let patient of patients | filterPatients: filterargs">
-    <div class="row">
-        <div class="col-12">
-            <button class="list-group-item list-group-item-action" (click)="assign(patient)">{{patient.nombre}} {{patient.apellido}}</button>
+    <div class="d-flex justify-content-center" *ngIf="loading == true">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+    <div class="list-group padding-top" *ngFor= "let patient of patients | filterPatients: filterargs">
+        <div class="row">
+            <div class="col-12">
+                <button class="list-group-item list-group-item-action" (click)="assign(patient)">{{patient.nombre}} {{patient.apellido}}</button>
+            </div>
+        </div>
+    </div>
+    
 </div>

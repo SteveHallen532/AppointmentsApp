@@ -11,6 +11,7 @@ import { Patient } from '../../models/Patient';
 import { AppointmentsService } from '../../services/appointments.service';
 import { PatientsService } from '../../services/patients.service';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -44,7 +45,8 @@ export class AppointmentsListComponent implements OnInit {
               private activatedRoute:ActivatedRoute, 
               private appointment_service:AppointmentsService, 
               private router:Router,
-              private auth_service: AuthenticationService ) { }
+              private auth_service: AuthenticationService,
+              private location:Location) { }
 
   ngOnInit(): void {
     this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
@@ -89,14 +91,18 @@ export class AppointmentsListComponent implements OnInit {
   }
 
   getDates() {
-    let firstAppointment = this.appointments[0].fecha;
-    this.dates.push(firstAppointment);
-    for (let i = 1; i < this.appointments.length; i++) {
-      let date = this.appointments[i].fecha;
-      if(date != this.appointments[i-1].fecha) {
-        this.dates.push(date);
-      }      
+
+    if(this.appointments.length>0){
+      let firstAppointment = this.appointments[0].fecha;
+      this.dates.push(firstAppointment);
+      for (let i = 1; i < this.appointments.length; i++) {
+        let date = this.appointments[i].fecha;
+        if(date != this.appointments[i-1].fecha) {
+          this.dates.push(date);
+        }      
+      }
     }
+ 
     this.loading = false;
   }
 
@@ -310,6 +316,14 @@ export class AppointmentsListComponent implements OnInit {
         );
       }
     })
+  }
+
+  back() {
+    if(this.idPatient != undefined){
+      this.router.navigate(['/consultas', this.idPatient]);
+    } else {
+      this.location.back();
+    }
   }
 
 }

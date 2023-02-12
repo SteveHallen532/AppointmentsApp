@@ -8,6 +8,7 @@ import { AppointmentsService } from '../../services/appointments.service';
 import { PatientsService } from '../../services/patients.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sellect-patient',
@@ -35,7 +36,8 @@ export class SellectPatientComponent implements OnInit {
               private patients_service:PatientsService, 
               private appointment_service: AppointmentsService, 
               private router:Router,
-              private auth_service: AuthenticationService) { }
+              private auth_service: AuthenticationService,
+              private location:Location) { }
 
   ngOnInit(): void {
     this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
@@ -88,6 +90,10 @@ export class SellectPatientComponent implements OnInit {
       }
       this.router.navigate(['/appointments-list']);
     })
+  }
+
+  back() {
+    this.location.back();
   }
 
 }

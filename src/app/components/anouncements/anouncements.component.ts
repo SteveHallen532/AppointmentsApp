@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Announcement } from '../../models/Announcement';
 import { AnnouncementsService } from '../../services/announcements.service';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-anouncements',
@@ -19,7 +20,8 @@ export class AnouncementsComponent implements OnInit {
   currentUser: Usuario;
 
   constructor(private announcement_service:AnnouncementsService,
-              private auth_service: AuthenticationService) { }
+              private auth_service: AuthenticationService,
+              private location:Location) { }
 
   ngOnInit(): void {
     this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
@@ -85,6 +87,10 @@ export class AnouncementsComponent implements OnInit {
   cancel(){
     this.announcement.title = '';
     this.announcement.body = '';
+  }
+
+  back() {
+    this.location.back();
   }
 
 }

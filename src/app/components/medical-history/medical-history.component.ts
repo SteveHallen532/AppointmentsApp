@@ -54,4 +54,8 @@ export class MedicalHistoryComponent implements OnInit {
     this.router.navigate(['/medical-history-form', this.medicalHistory._id, this.id_patient])
   }
 
+  back() {
+    this.router.navigate(['/consultas', this.id_patient])
+    }
+
 }

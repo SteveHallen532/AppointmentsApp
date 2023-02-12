@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Consulta } from '../../models/Consulta';
 import { ConsultasService } from '../../services/consultas.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -68,7 +68,7 @@ export class ConsultaFormComponent implements OnInit {
       }).then(() => {
         this.consulta_service.newConsultas(this.consulta, this.id)
         .subscribe(() =>{
-           this.router.navigate(['consultas/' + this.id_patient]);
+          this.location.back();
           }
         )
       })
@@ -95,7 +95,10 @@ export class ConsultaFormComponent implements OnInit {
       this.location.back();
     }  
 
-    //this.router.navigate(['consultas/' + this.id_patient ]);  
+  }
+
+  back() {
+    this.location.back();
   }
 
   //Validation

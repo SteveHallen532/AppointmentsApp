@@ -117,6 +117,10 @@ export class PatientFormComponent implements OnInit {
 
   }
 
+  back() {
+    this.location.back();
+  }
+
   //date validation
 
   isBefore(a:string) {
