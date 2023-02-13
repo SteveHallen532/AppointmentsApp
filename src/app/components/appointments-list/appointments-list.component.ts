@@ -322,7 +322,7 @@ export class AppointmentsListComponent implements OnInit {
     if(this.idPatient != undefined){
       this.router.navigate(['/consultas', this.idPatient]);
     } else {
-      this.location.back();
+      this.router.navigate(['/home']);
     }
   }
 

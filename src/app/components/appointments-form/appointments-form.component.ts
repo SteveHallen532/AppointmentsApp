@@ -207,7 +207,11 @@ export class AppointmentsFormComponent implements OnInit {
   }
 
   back() {
-    this.location.back();
+    if(this.idPatient == undefined) {
+      this.router.navigate(['/appointments-list']);
+    } else {
+      this.router.navigate(['/consultas/', this.idPatient]);
+    }
   }
 
 
