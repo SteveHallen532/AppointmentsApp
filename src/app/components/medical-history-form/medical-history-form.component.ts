@@ -6,6 +6,7 @@ import { PatientsService } from '../../services/patients.service';
 import { Patient } from '../../models/Patient';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-medical-history-form',
@@ -18,6 +19,7 @@ export class MedicalHistoryFormComponent implements OnInit {
   medicalHistory: HistoriaClinica = new HistoriaClinica;
   id_medical_History: string = '';
   id_patient = '';
+  today = moment().format('YYYY-MM-DD');
 
   constructor(private medical_history_service: MedicalHistoryService, 
               private router:Router, 
@@ -85,4 +87,29 @@ export class MedicalHistoryFormComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+    //Validation
+    minHeight= 10; 
+    maxHeight = 200;
+  
+    minWeight = 0.5;
+    maxWeight= 400;
+  
+    isBefore(a:string) {
+      return moment(this.today).isBefore(a);
+    }
+  
+    outOfRange(a:string) {
+      return moment(a).isBefore(moment('01/01/1920'));
+    }
+  
+    minMaxValidation(a, b, c){
+      
+      if (a <= Number(b) && Number(b) <= c) {
+        return true;
+      } else {
+        return false
+      }
+    }
+
 }

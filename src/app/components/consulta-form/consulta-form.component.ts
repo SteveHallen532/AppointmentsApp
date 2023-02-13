@@ -58,26 +58,27 @@ export class ConsultaFormComponent implements OnInit {
   }
 
   saveConsulta() {
-    if(this.consulta.altura != '' && this.consulta.peso != '') {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Datos guardados',
-        showConfirmButton: false,
-        timer: 1500
-      }).then(() => {
-        this.consulta_service.newConsultas(this.consulta, this.id)
-        .subscribe(() =>{
-          this.location.back();
-          }
-        )
-      })
-    }
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Datos guardados',
+      showConfirmButton: false,
+      timer: 1500
+    }).then(() => {
+      this.consulta_service.newConsultas(this.consulta, this.id)
+      .subscribe(() =>{
+        this.location.back();
+        }
+      )
+    })
   }   
 
   cancel(){
     
-    if(this.consulta.altura != '' || this.consulta.peso != '' || this.consulta.fecha != '') {
+    if(this.consulta.circunferencia_de_cintura != '' || this.consulta.peso != '' || this.consulta.fecha != ''
+    || this.consulta.circunferencia_de_cintura_baja != '' || this.consulta.cadera != '' || this.consulta.circunferencia_de_muslo != '' 
+    || this.consulta.torax != '' || this.consulta.torax_alto != '' || this.consulta.busto != '' || this.consulta.busto_medio != '' 
+    || this.consulta.cuello != '' || this.consulta.brazo != '') {
       Swal.fire({
         title: 'Seguro?',
         text: "Desea salir sin guardar los datos?",
@@ -102,8 +103,8 @@ export class ConsultaFormComponent implements OnInit {
   }
 
   //Validation
-  minHeight= 30; 
-  maxHeight = 250;
+  min= 10; 
+  max = 200;
 
   minWeight = 0.5;
   maxWeight= 400;

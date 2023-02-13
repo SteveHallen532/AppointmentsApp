@@ -5,7 +5,7 @@
           </svg>
     </button>
 </div>
-<form action="submit" novalidate (ngSubmit)="saveConsulta()" #f="ngForm">
+<form action="submit" novalidate #f="ngForm">
     <div class="container">
         <div class="form-group padding">
             <label for="date">Fecha:</label>
@@ -29,26 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group padding">
-            <label for="inp-altura">Altura:</label>
-            <input type="text" class="form-control" name="altura" id="inp-altura" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.altura" #height="ngModel" required
-            [ngStyle]="{'border': (height.invalid && (height.dirty || height.touched)) || (minMaxValidation(minHeight, height.value, maxHeight) == false && (height.dirty || height.touched))? '1px solid red' : ''}" autocomplete="off">
-            <div class="alert-div">
-                <div *ngIf="height.dirty || height.touched" class="alert-div">
-                    <div *ngIf="height.invalid">
-                        <p *ngIf="height.errors?.['required']" class="alert">
-                            Completa este campo.
-                        </p>
-                        <p *ngIf="height.errors?.['pattern']" class="alert">
-                            Formato incorrecto.
-                        </p>
-                    </div>
-                    <p *ngIf="minMaxValidation(minHeight, height.value, maxHeight) == false && !height.errors?.['pattern'] && !height.errors?.['required']" class="alert">
-                        La altura puede estar entre 30 y 250cm.
-                    </p>
-                </div>
-            </div>
-        </div>
+
         <div class="form-group padding">
             <label for="inp-peso">Peso:</label>
             <input type="text" class="form-control" name="peso" id="inp-peso" placeholder="0.00Kg" pattern="[0]{0,1}[1-9]{1,3}[.]{0,1}[\d]{0,2}" [(ngModel)]="consulta.peso" #weight="ngModel" required
@@ -68,10 +49,233 @@
                     </p>
                 </div>
             </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Circunferencia de cintura:</label>
+            <input type="text" class="form-control" name="circunferencia_de_cintura" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.circunferencia_de_cintura" #circ_cintura="ngModel" required
+            [ngStyle]="{'border': (circ_cintura.invalid && (circ_cintura.dirty || circ_cintura.touched)) || (minMaxValidation(min, circ_cintura.value, max) == false && (circ_cintura.dirty || circ_cintura.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="circ_cintura.dirty || circ_cintura.touched" class="alert-div">
+                    <div *ngIf="circ_cintura.invalid">
+                        <p *ngIf="circ_cintura.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="circ_cintura.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, circ_cintura.value, max) == false && !circ_cintura.errors?.['pattern'] && !circ_cintura.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Circunferencia de cintura baja:</label>
+            <input type="text" class="form-control" name="circunferencia_de_cintura_baja" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.circunferencia_de_cintura_baja" #circ_cintura_baja="ngModel" required
+            [ngStyle]="{'border': (circ_cintura_baja.invalid && (circ_cintura_baja.dirty || circ_cintura_baja.touched)) || (minMaxValidation(min, circ_cintura_baja.value, max) == false && (circ_cintura_baja.dirty || circ_cintura_baja.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="circ_cintura_baja.dirty || circ_cintura_baja.touched" class="alert-div">
+                    <div *ngIf="circ_cintura_baja.invalid">
+                        <p *ngIf="circ_cintura_baja.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="circ_cintura_baja.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, circ_cintura_baja.value, max) == false && !circ_cintura_baja.errors?.['pattern'] && !circ_cintura_baja.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Cadera:</label>
+            <input type="text" class="form-control" name="cadera" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.cadera" #cadera="ngModel" required
+            [ngStyle]="{'border': (cadera.invalid && (cadera.dirty || cadera.touched)) || (minMaxValidation(min, cadera.value, max) == false && (cadera.dirty || cadera.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="cadera.dirty || cadera.touched" class="alert-div">
+                    <div *ngIf="cadera.invalid">
+                        <p *ngIf="cadera.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="cadera.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, cadera.value, max) == false && !cadera.errors?.['pattern'] && !cadera.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Circunferencia de muslo:</label>
+            <input type="text" class="form-control" name="circunferencia_de_muslo" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.circunferencia_de_muslo" #circunferencia_de_muslo="ngModel" required
+            [ngStyle]="{'border': (circunferencia_de_muslo.invalid && (circunferencia_de_muslo.dirty || circunferencia_de_muslo.touched)) || (minMaxValidation(min, circunferencia_de_muslo.value, max) == false 
+            && (circunferencia_de_muslo.dirty || circunferencia_de_muslo.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="circunferencia_de_muslo.dirty || circunferencia_de_muslo.touched" class="alert-div">
+                    <div *ngIf="circunferencia_de_muslo.invalid">
+                        <p *ngIf="circunferencia_de_muslo.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="circunferencia_de_muslo.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, circunferencia_de_muslo.value, max) == false && !circunferencia_de_muslo.errors?.['pattern'] && !circunferencia_de_muslo.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Torax:</label>
+            <input type="text" class="form-control" name="torax" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.torax" #torax="ngModel" required
+            [ngStyle]="{'border': (torax.invalid && (torax.dirty || torax.touched)) || (minMaxValidation(min, torax.value, max) == false 
+            && (torax.dirty || torax.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="torax.dirty || torax.touched" class="alert-div">
+                    <div *ngIf="torax.invalid">
+                        <p *ngIf="torax.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="torax.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, torax.value, max) == false && !torax.errors?.['pattern'] && !torax.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Torax alto:</label>
+            <input type="text" class="form-control" name="torax_alto" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.torax_alto" #torax_alto="ngModel" required
+            [ngStyle]="{'border': (torax_alto.invalid && (torax_alto.dirty || torax_alto.touched)) || (minMaxValidation(min, torax_alto.value, max) == false 
+            && (torax_alto.dirty || torax_alto.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="torax_alto.dirty || torax_alto.touched" class="alert-div">
+                    <div *ngIf="torax_alto.invalid">
+                        <p *ngIf="torax_alto.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="torax_alto.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, torax_alto.value, max) == false && !torax_alto.errors?.['pattern'] && !torax_alto.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Busto:</label>
+            <input type="text" class="form-control" name="busto" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.busto" #busto="ngModel" required
+            [ngStyle]="{'border': (busto.invalid && (busto.dirty || busto.touched)) || (minMaxValidation(min, busto.value, max) == false 
+            && (busto.dirty || busto.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="busto.dirty || busto.touched" class="alert-div">
+                    <div *ngIf="busto.invalid">
+                        <p *ngIf="busto.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="busto.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, busto.value, max) == false && !busto.errors?.['pattern'] && !busto.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Busto medio:</label>
+            <input type="text" class="form-control" name="busto_medio" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.busto_medio" #busto_medio="ngModel" required
+            [ngStyle]="{'border': (busto_medio.invalid && (busto_medio.dirty || busto_medio.touched)) || (minMaxValidation(min, busto_medio.value, max) == false 
+            && (busto_medio.dirty || busto_medio.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="busto_medio.dirty || busto_medio.touched" class="alert-div">
+                    <div *ngIf="busto_medio.invalid">
+                        <p *ngIf="busto_medio.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="busto_medio.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, busto_medio.value, max) == false && !busto_medio.errors?.['pattern'] && !busto_medio.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Cuello:</label>
+            <input type="text" class="form-control" name="cuello" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.cuello" #cuello="ngModel" required
+            [ngStyle]="{'border': (cuello.invalid && (cuello.dirty || cuello.touched)) || (minMaxValidation(min, cuello.value, max) == false 
+            && (cuello.dirty || cuello.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="cuello.dirty || cuello.touched" class="alert-div">
+                    <div *ngIf="cuello.invalid">
+                        <p *ngIf="cuello.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="cuello.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, cuello.value, max) == false && !cuello.errors?.['pattern'] && !cuello.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Brazo:</label>
+            <input type="text" class="form-control" name="brazo" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="consulta.brazo" #brazo="ngModel" required
+            [ngStyle]="{'border': (brazo.invalid && (brazo.dirty || brazo.touched)) || (minMaxValidation(min, brazo.value, max) == false 
+            && (brazo.dirty || brazo.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="brazo.dirty || brazo.touched" class="alert-div">
+                    <div *ngIf="brazo.invalid">
+                        <p *ngIf="brazo.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="brazo.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, brazo.value, max) == false && !brazo.errors?.['pattern'] && !brazo.errors?.['required']" class="alert">
+                        La medida puede estar entre 10 y 200cm.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group padding">
             <div class="container">
                 <div class="d-flex flex-row-reverse padding-top">
                     <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
-                        <input type="submit" class="btn btn-primary" (click)="saveConsulta()" value="Guardar" [disabled]="f.invalid || minMaxValidation(minHeight, height.value, maxHeight) == false ||
+                        <input type="submit" class="btn btn-primary" (click)="saveConsulta()" value="Guardar" [disabled]="f.invalid || minMaxValidation(min, circ_cintura.value, max) == false || 
+                        minMaxValidation(min, circ_cintura_baja.value, max) == false || minMaxValidation(min, cadera.value, max) == false || minMaxValidation(min, circunferencia_de_muslo.value, max) == false ||
+                        minMaxValidation(min, torax.value, max) == false || minMaxValidation(min, torax_alto.value, max) == false || minMaxValidation(min, busto.value, max) == false ||
+                        minMaxValidation(min, busto_medio.value, max) == false || minMaxValidation(min, cuello.value, max) == false || minMaxValidation(min, brazo.value, max) == false || 
                         minMaxValidation(minWeight, weight.value, maxWeight) == false">
                     </div>
                     <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
