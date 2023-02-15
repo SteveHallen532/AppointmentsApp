@@ -11,6 +11,7 @@ export class Appointment {
     enabled: boolean;
     confirmado: boolean;
     organizacion: Organizacion;
+    hora_fin: string;
 
     constructor() {
         this._id = '';
@@ -21,6 +22,7 @@ export class Appointment {
         this.asignado = false;
         this.enabled = true;
         this.confirmado = false;
+        this.hora_fin = '';
     }
 
 }

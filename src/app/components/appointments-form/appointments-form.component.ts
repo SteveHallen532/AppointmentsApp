@@ -23,7 +23,8 @@ export class AppointmentsFormComponent implements OnInit {
   idPatient ='';
   patients: Patient[] = [];
   patient: Patient = new Patient;
-  appointment: Appointment = new Appointment; 
+  appointment: Appointment = new Appointment;
+  appointments: Appointment[]; 
   selectedPatient: string = '';
   subtitle='Filtrar por nombre o apellido'
 
@@ -53,6 +54,8 @@ export class AppointmentsFormComponent implements OnInit {
       this.getPatients()
     }
 
+    this.getAppointments();
+
   }
 
   getAppointment(){
@@ -62,6 +65,15 @@ export class AppointmentsFormComponent implements OnInit {
         this.appointment = result;
         this.patient = this.appointment.patient;
         this.selectedPatient = this.patient.nombre + ' ' + this.patient.apellido;
+      }
+    )
+  }
+
+  getAppointments() {
+    this.appointment_service.getAppointments(this.auth_service.currentUserValue.organizacion._id)
+    .subscribe(
+      result => {
+        this.appointments = result;
       }
     )
   }
@@ -100,34 +112,79 @@ export class AppointmentsFormComponent implements OnInit {
     this.appointment.sobreturno = true;
     this.appointment.asignado = true;
     this.appointment.organizacion=this.currentUser.organizacion;
-  Swal.fire({
-    title: 'Asignar?',
-    text: "Asignar sobreturno a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Asignar!',
-    cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.appointment_service.newAppointment(this.appointment).subscribe(
-          () => {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Sobreturno asignado',
-              showConfirmButton: false,
-              timer: 1500
-            }) 
+
+    if(this.overlap() == true) {
+      Swal.fire({
+        title: 'Ya hay un turno asignado en ese rango horario.',
+        text: "Asignar turno de todas formas?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Asignar?',
+            text: "Asignar sobreturno a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Asignar!',
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.appointment_service.newAppointment(this.appointment).subscribe(
+                  () => {
+                    Swal.fire({
+                      position: 'center',
+                      icon: 'success',
+                      title: 'Sobreturno asignado',
+                      showConfirmButton: false,
+                      timer: 1500
+                    }) 
+                  }
+                )         
+              }
+              if(this.idPatient == undefined) {
+                this.router.navigate(['/appointments-list']);
+              } else {
+                this.router.navigate(['/consultas/', this.idPatient]);
+              }
+            })
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'Asignar?',
+        text: "Asignar sobreturno a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Asignar!',
+        cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.appointment_service.newAppointment(this.appointment).subscribe(
+              () => {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Sobreturno asignado',
+                  showConfirmButton: false,
+                  timer: 1500
+                }) 
+              }
+            )         
           }
-        )         
-      }
-      if(this.idPatient == undefined) {
-        this.router.navigate(['/appointments-list']);
-      } else {
-        this.router.navigate(['/consultas/', this.idPatient]);
-      }
-    })
+          if(this.idPatient == undefined) {
+            this.router.navigate(['/appointments-list']);
+          } else {
+            this.router.navigate(['/consultas/', this.idPatient]);
+          }
+        })
+    }
     
   }
 
@@ -138,30 +195,68 @@ export class AppointmentsFormComponent implements OnInit {
     this.appointment.asignado = true;
     this.appointment.organizacion=this.currentUser.organizacion;
    
-    Swal.fire({
-      title: 'Editar?',
-      text: "Editar sobreturno de " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' para el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Editar!',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.appointment_service.updateAppointment(this.appointment._id, this.appointment)
-        .subscribe(() => {
+    if(this.overlap() == true) {
+      Swal.fire({
+        title: 'Ya hay un turno asignado en ese rango horario.',
+        text: "Asignar turno de todas formas?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Sobreturno editado',
-            showConfirmButton: false,
-            timer: 1500
-          })            
-        })
-      }
-      this.location.back();
-    })
-      
+            title: 'Editar?',
+            text: "Editar sobreturno de " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' para el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Editar!',
+            cancelButtonText: 'Cancelar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.appointment_service.updateAppointment(this.appointment._id, this.appointment)
+              .subscribe(() => {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Sobreturno editado',
+                  showConfirmButton: false,
+                  timer: 1500
+                })            
+              })
+            }
+            this.location.back();
+          })
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'Editar?',
+        text: "Editar sobreturno de " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' para el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.appointment_service.updateAppointment(this.appointment._id, this.appointment)
+          .subscribe(() => {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Sobreturno editado',
+              showConfirmButton: false,
+              timer: 1500
+            })            
+          })
+        }
+        this.location.back();
+      })
+    }   
   }
 
   request() {
@@ -214,5 +309,13 @@ export class AppointmentsFormComponent implements OnInit {
     }
   }
 
+  overlap() {
+    for(let i= 0; i <= this.appointments.length; i++) {
+      if (moment(this.appointment.fecha + ' ' + this.appointment.hora).isAfter(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora)) 
+      && moment(this.appointment.fecha + ' ' + this.appointment.hora).isBefore(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora_fin))) {
+        return true;
+      }
+    }
+  }
 
 }
