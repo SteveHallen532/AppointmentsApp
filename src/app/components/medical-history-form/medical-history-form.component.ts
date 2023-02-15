@@ -89,14 +89,19 @@ export class MedicalHistoryFormComponent implements OnInit {
   }
 
     //Validation
-    minHeight= 10; 
+    minHeight = 10; 
     maxHeight = 200;
   
     minWeight = 0.5;
-    maxWeight= 400;
+    maxWeight = 400;
+
+    min = 1;
+    max = 50;
   
     isBefore(a:string) {
-      return moment(this.today).isBefore(a);
+      if(a) {
+        return moment(this.today).isBefore(a);
+      }
     }
   
     outOfRange(a:string) {

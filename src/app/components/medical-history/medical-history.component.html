@@ -16,11 +16,42 @@
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+
+    <table class="table table-striped overflow-auto">
+        <tbody>
+            <tr>
+                <th scope="col">Fecha de inicio</th>
+                <td scope="row">{{medicalHistory.fecha_inicio}}</td>
+            </tr>
+            <tr>
+                <th scope="col">Tiempo estimado de tratamiento</th>
+                <td scope="row">{{medicalHistory.tiempo_estimado_tratamiento}}</td>
+            </tr>
+            <tr>
+                <th scope="col">Talla</th>
+                <td scope="row">{{medicalHistory.talla}}</td>
+            </tr>
+            <tr>
+                <th scope="col">Peso inicial</th>
+                <td scope="row">{{medicalHistory.peso}}</td>
+            </tr>
+            <tr>
+                <th scope="col">Peso ideal</th>
+                <td scope="row">{{medicalHistory.peso_ideal}}</td>
+            </tr>
+            <tr>
+                <th scope="col">Descripción</th>
+                <td scope="row">{{medicalHistory.descripcion}}</td>
+            </tr>
+        </tbody>
+    </table>
+                
     <div class="col-12">
         <div id="card" class="card container overflow-auto" style="white-space:pre-wrap;" *ngIf="medicalHistory.descripcion != ''">
-            <p>{{medicalHistory.descripcion}}</p>
+            <p></p>
         </div>
     </div>
+
     <div class="d-flex flex-row-reverse">
         <div class="col-1 padding">
             <button type="button" class="btn btn-primary" (click)="goToEditForm()">

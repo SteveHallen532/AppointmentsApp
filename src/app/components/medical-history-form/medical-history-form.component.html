@@ -11,8 +11,8 @@
 
     
         <div class="form-group padding">
-            <label for="date">Fecha:</label>
-            <input type="date" class="form-control" name="fecha" id="date" [(ngModel)]="medicalHistory.fecha_inicio" #date="ngModel"
+            <label for="date">Fecha de inicio:</label>
+            <input type="date" class="form-control" name="fecha_inicio" id="date" [(ngModel)]="medicalHistory.fecha_inicio" #date="ngModel"
             [ngStyle]="{'border': (date.invalid || isBefore(date.value)) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01" required>
             <div class="alert-div">
                 <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
@@ -32,9 +32,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group padding">
+            <label for="inp-altura">Tiempo estimado de tratamiento:</label>
+            <input type="text" class="form-control" name="tiempo_estimado" placeholder="meses" pattern="[1-9]{1}[\d]{0,1}" [(ngModel)]="medicalHistory.tiempo_estimado_tratamiento" #tiempo_estimado="ngModel" required
+            [ngStyle]="{'border': (tiempo_estimado.invalid && (tiempo_estimado.dirty || tiempo_estimado.touched)) || (minMaxValidation(min, tiempo_estimado.value, max) == false && (tiempo_estimado.dirty || tiempo_estimado.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="tiempo_estimado.dirty || tiempo_estimado.touched" class="alert-div">
+                    <div *ngIf="tiempo_estimado.invalid">
+                        <p *ngIf="tiempo_estimado.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="tiempo_estimado.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(min, tiempo_estimado.value, max) == false && !tiempo_estimado.errors?.['pattern'] && !tiempo_estimado.errors?.['required']" class="alert">
+                        El tiempo estimado de tratamiento puede estar entre los 1 y 50 meses.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group padding">
             <label for="inp-altura">Talla:</label>
-            <input type="text" class="form-control" name="talla" id="inp-altura" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="medicalHistory.talla" #height="ngModel" required
+            <input type="text" class="form-control" name="talla" placeholder="000cm" pattern="[1-9]{1}[\d]*" [(ngModel)]="medicalHistory.talla" #height="ngModel" required
             [ngStyle]="{'border': (height.invalid && (height.dirty || height.touched)) || (minMaxValidation(minHeight, height.value, maxHeight) == false && (height.dirty || height.touched))? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="height.dirty || height.touched" class="alert-div">
@@ -47,14 +69,15 @@
                         </p>
                     </div>
                     <p *ngIf="minMaxValidation(minHeight, height.value, maxHeight) == false && !height.errors?.['pattern'] && !height.errors?.['required']" class="alert">
-                        La altura puede estar entre 30 y 250cm.
+                        La talla puede estar entre 30 y 250cm.
                     </p>
                 </div>
             </div>
         </div>
+
         <div class="form-group padding">
             <label for="inp-peso">Peso:</label>
-            <input type="text" class="form-control" name="peso" id="inp-peso" placeholder="0.00Kg" pattern="[0]{0,1}[1-9]{1,3}[.]{0,1}[\d]{0,2}" [(ngModel)]="medicalHistory.peso" #weight="ngModel" required
+            <input type="text" class="form-control" name="peso" placeholder="0.00Kg" pattern="[0]{0,1}[1-9]{1,3}[.]{0,1}[\d]{0,2}" [(ngModel)]="medicalHistory.peso" #weight="ngModel" required
             [ngStyle]="{'border': (weight.invalid && (weight.dirty || weight.touched)) || (minMaxValidation(minWeight, weight.value, maxWeight) == false && (weight.dirty || weight.touched))? '1px solid red' : ''}" autocomplete="off">
             <div class="alert-div">
                 <div *ngIf="weight.dirty || weight.touched" class="alert-div">
@@ -71,12 +94,45 @@
                     </p>
                 </div>
             </div>
-            <div>
-                <label for="inp-description">Descripcion</label>
-                <div class="row padding">
-                    <textarea class="form-control" name="description" id="inp-description" rows="20" [(ngModel)]="medicalHistory.descripcion" required></textarea>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-peso">Peso ideal:</label>
+            <input type="text" class="form-control" name="peso_ideal" placeholder="0.00Kg" pattern="[0]{0,1}[1-9]{1,3}[.]{0,1}[\d]{0,2}" [(ngModel)]="medicalHistory.peso_ideal" #ideal_weight="ngModel" required
+            [ngStyle]="{'border': (ideal_weight.invalid && (ideal_weight.dirty || ideal_weight.touched)) || (minMaxValidation(minWeight, ideal_weight.value, maxWeight) == false && (ideal_weight.dirty || ideal_weight.touched))? '1px solid red' : ''}" autocomplete="off">
+            <div class="alert-div">
+                <div *ngIf="ideal_weight.dirty || ideal_weight.touched" class="alert-div">
+                    <div *ngIf="ideal_weight.invalid">
+                        <p *ngIf="ideal_weight.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                        <p *ngIf="ideal_weight.errors?.['pattern']" class="alert">
+                            Formato incorrecto.
+                        </p>
+                    </div>
+                    <p *ngIf="minMaxValidation(minWeight, ideal_weight.value, maxWeight) == false && !ideal_weight.errors?.['pattern'] && !ideal_weight.errors?.['required']" class="alert">
+                        El peso puede estar entre 0.5 y 400Kg.
+                    </p>
                 </div>
             </div>
+        </div>
+
+        <div class="form-group padding">
+            <label for="inp-description">Descripción</label>
+            <div class="row padding">
+                <textarea class="form-control" name="description" id="inp-description" rows="20" [(ngModel)]="medicalHistory.descripcion" #descripcion="ngModel" required
+                [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off"></textarea>
+                <div *ngIf="descripcion.dirty || descripcion.touched" class="alert-div">
+                    <div *ngIf="descripcion.invalid">
+                        <p *ngIf="descripcion.errors?.['required']" class="alert">
+                            Completa este campo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
             <div class="container">
                 <div class="d-flex flex-row-reverse padding-top">
                     <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
@@ -90,18 +146,5 @@
             </div>
         </div>
     
-
-
-        
-        <div class="container">
-            <div class="d-flex flex-row-reverse padding">
-                <div class="col-xl-1 col-lg-2 col-6 d-flex justify-content-center">
-                    <input type="submit" class="btn btn-primary" (click)="editMedicalHistory()" value="Guardar">
-                </div>
-                <div class="col-xl-1 col-lg-2 col-6 d-flex justify-content-center">
-                    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
-                </div>
-            </div>
-        </div>
     </div>
 </form>
