@@ -7,10 +7,6 @@
     padding-top: 40px;
 }
 
-.scrollX {
-    overflow-x: auto;
-}
-
 .dtHorizontalVerticalWrapper {
     margin: auto;
     width: 120vw;
