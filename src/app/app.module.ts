@@ -27,6 +27,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoginComponent } from './components/login/login.component';
 import { FilterByDatePipe } from './pipes/filter-by-date.pipe';
 import {DateValidatorDirective} from './validations';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import {DateValidatorDirective} from './validations';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
