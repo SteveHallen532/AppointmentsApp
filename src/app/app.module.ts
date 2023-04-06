@@ -28,6 +28,9 @@ import { LoginComponent } from './components/login/login.component';
 import { FilterByDatePipe } from './pipes/filter-by-date.pipe';
 import {DateValidatorDirective} from './validations';
 import { RouterModule } from '@angular/router';
+import { PlantillaDietaComponent } from './components/plantilla-dieta/plantilla-dieta.component';
+import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/plantilla-dieta-list.component';
+import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/plantilla-dieta-form.component';
 
 
 @NgModule({
@@ -51,7 +54,10 @@ import { RouterModule } from '@angular/router';
     SellectPatientComponent,
     LoginComponent,
     FilterByDatePipe,
-    DateValidatorDirective
+    DateValidatorDirective,
+    PlantillaDietaComponent,
+    PlantillaDietaListComponent,
+    PlantillaDietaFormComponent
   ],
   imports: [
     BrowserModule,

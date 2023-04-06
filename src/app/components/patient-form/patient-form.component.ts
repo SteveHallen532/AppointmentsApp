@@ -118,7 +118,23 @@ export class PatientFormComponent implements OnInit {
   }
 
   back() {
-    this.location.back();
+    if(this.patient.nombre != '' && this.patient.apellido != '') {
+      Swal.fire({
+        title: 'Seguro?',
+        text: "Desea salir sin guardar los cambios?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Salir!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.location.back();
+        }
+      })
+    } else {
+      this.location.back();
+    }
   }
 
   //date validation

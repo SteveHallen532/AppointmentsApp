@@ -17,6 +17,9 @@ import { AppointmentsListComponent } from './components/appointments-list/appoin
 import { SellectPatientComponent } from './components/sellect-patient/sellect-patient.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './_helpers';
+import { PlantillaDietaComponent } from './components/plantilla-dieta/plantilla-dieta.component';
+import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/plantilla-dieta-form.component';
+import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/plantilla-dieta-list.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent},
@@ -40,7 +43,12 @@ const routes: Routes = [
   {path:'medical-history-form/:id/:id_patient', component: MedicalHistoryFormComponent, canActivate: [AuthGuard]},
   {path:'appointments-list', component: AppointmentsListComponent, canActivate: [AuthGuard]},
   {path:'appointments-list/:id', component: AppointmentsListComponent, canActivate: [AuthGuard]},
-  {path:'select-patient/:id', component:SellectPatientComponent, canActivate: [AuthGuard]}
+  {path:'select-patient/:id', component:SellectPatientComponent, canActivate: [AuthGuard]},
+  {path:'plantilla-dieta-component/:id', component:PlantillaDietaComponent, canActivate: [AuthGuard]},
+  {path:'plantilla-dieta-list', component:PlantillaDietaListComponent, canActivate: [AuthGuard]},
+  {path:'plantilla-dieta-form', component:PlantillaDietaFormComponent, canActivate: [AuthGuard]},
+  {path:'plantilla-dieta-form/:id', component:PlantillaDietaFormComponent, canActivate: [AuthGuard]},
+  {path:'plantilla-dieta-form/:id/:origin', component:PlantillaDietaFormComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
