@@ -1,3 +1,4 @@
+import { Dieta } from "./Dieta";
 import { Patient } from "./Patient";
 
 export class HistoriaClinica {
@@ -8,7 +9,6 @@ export class HistoriaClinica {
     peso: string;
     peso_ideal: string;
     descripcion: string;
-    id_dieta: string[];
     patient: Patient = new Patient;
 
     constructor() {
@@ -19,6 +19,5 @@ export class HistoriaClinica {
         this.peso = '';
         this.peso_ideal = '';
         this.descripcion = '';
-        this.id_dieta = [];
     }
 }

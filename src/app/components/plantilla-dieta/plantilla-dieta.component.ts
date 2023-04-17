@@ -11,6 +11,7 @@ import { PlantillaDietaService } from 'src/app/services/plantilla-dieta.service'
 export class PlantillaDietaComponent implements OnInit {
   id:string;
   plantillaDieta:PlantillaDieta;
+  loading = true;
 
   constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantilla_dieta_service:PlantillaDietaService) { }
 
@@ -23,6 +24,7 @@ export class PlantillaDietaComponent implements OnInit {
     this.plantilla_dieta_service.getPlantillaDieta(this.id).subscribe(
       result => {
         this.plantillaDieta = result;
+        this.loading = false;
       }
     )
   }

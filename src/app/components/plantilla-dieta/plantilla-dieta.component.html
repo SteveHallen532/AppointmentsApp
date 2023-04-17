@@ -5,7 +5,12 @@
         </svg>
   </button>
 </div>
-<div id="table_div" class="container-fluid overflow-auto">
+<div class="d-flex justify-content-center" *ngIf="loading == true">
+  <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<div id="table_div" class="container-fluid overflow-auto" *ngIf="!loading">
     <table class="table table-striped table-bordered dtHorizontalVerticalWrapper">
       <thead>
         <tr>

@@ -4,6 +4,8 @@ import { HistoriaClinica } from '../../models/HistoriaClinica';
 import { Patient } from '../../models/Patient';
 import { MedicalHistoryService } from '../../services/medical-history.service';
 import { PatientsService } from '../../services/patients.service';
+import { Dieta } from 'src/app/models/Dieta';
+import { DietaService } from 'src/app/services/dieta.service';
 
 @Component({
   selector: 'app-medical-history',
@@ -18,17 +20,20 @@ export class MedicalHistoryComponent implements OnInit {
 
   id_medical_history = '';
 
+  currentDieta = new Dieta;
+
   patient: Patient = new Patient;
 
   medicalHistory: HistoriaClinica = new HistoriaClinica;
 
-  constructor(private router:Router, private medical_history_service:MedicalHistoryService, private patient_service:PatientsService, private activatedRoute: ActivatedRoute) { }
+  constructor(private dieta_service:DietaService, private router:Router, private medical_history_service:MedicalHistoryService, private patient_service:PatientsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.id_medical_history = this.activatedRoute.snapshot.params['id'];
     this.id_patient = this.activatedRoute.snapshot.params['id_patient'];
     this.getPatient();
     this.getMedicalHistory();
+    this.getCurrentDieta();
   }
 
   getMedicalHistory() {
@@ -39,6 +44,14 @@ export class MedicalHistoryComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  getCurrentDieta() {
+    this.dieta_service.getDieta(this.id_medical_history).subscribe(
+      result => {
+        this.currentDieta = result;
+      }
+    )
   }
 
   getPatient() {
@@ -52,6 +65,10 @@ export class MedicalHistoryComponent implements OnInit {
 
   goToEditForm() {
     this.router.navigate(['/medical-history-form', this.medicalHistory._id, this.id_patient])
+  }
+
+  goToDieta() {
+    this.router.navigate(['dieta/', this.medicalHistory._id, this.currentDieta._id])
   }
 
   back() {

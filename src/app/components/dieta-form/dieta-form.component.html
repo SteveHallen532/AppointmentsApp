@@ -5,13 +5,40 @@
           </svg>
     </button>
 </div>
-<p class="h1 text-center">Formulario de dietas</p>
+<p class="h1 text-center">Dieta</p>
 
 <form action="submit" novalidate #f="ngForm">
+    <div class="form-control padding">
+        <select class="form-select form-select-sm" aria-label="select tipo" *ngFor="let plantilla of plantillaDietaList" [(ngModel)]="selected">
+            <option value="{{plantilla}}">{{plantilla.tipo}}</option>
+          </select>
+    </div>
+    <div class="form-group padding">
+        <label for="date">Fecha de inicio:</label>
+        <input type="date" class="form-control" name="fecha_inicio" id="date" [(ngModel)]="dieta.inicio" #date="ngModel"
+        [ngStyle]="{'border': (date.invalid || isBefore(date.value)) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01" required>
+        <div class="alert-div">
+            <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
+                <p class="alert">
+                    La fecha no puede ser posterior al día de hoy.
+                </p>
+            </div>
+            <div *ngIf="date.errors?.['required'] && (date.dirty || date.touched)" class="alert-div">
+                <p class="alert">
+                    Completa este campo.
+                </p>
+            </div>
+            <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
+                <p class="alert">
+                    Fecha inválida.
+                </p>
+            </div>
+        </div>
+    </div>
     <div class="form-group padding">
         <label for="inp-description">Tipo</label>
         <div class="row padding">
-            <input type="text" class="form-control" name="tipo" id="inp-tipo" [(ngModel)]="plantillaDieta.tipo" #tipo="ngModel" required
+            <input type="text" class="form-control" name="tipo" id="inp-tipo" [(ngModel)]="selected.tipo" #tipo="ngModel" required
             [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off">
             <div *ngIf="tipo.dirty || tipo.touched" class="alert-div">
                 <div *ngIf="tipo.invalid">
@@ -25,7 +52,7 @@
     <div class="form-group padding">
         <label for="inp-description">Descripción</label>
         <div class="row padding">
-            <textarea class="form-control" name="description" id="inp-description" rows="20" [(ngModel)]="plantillaDieta.descripcion" #descripcion="ngModel" required
+            <textarea class="form-control" name="description" id="inp-description" rows="20" [(ngModel)]="selected.descripcion" #descripcion="ngModel" required
             [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off"></textarea>
             <div *ngIf="descripcion.dirty || descripcion.touched" class="alert-div">
                 <div *ngIf="descripcion.invalid">
@@ -40,7 +67,7 @@
         <div class="container">
             <div class="d-flex flex-row-reverse padding-top">
                 <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
-                    <input type="submit" class="btn btn-primary" (click)="savePlantillaDieta()" value="Guardar" [disabled]="f.invalid">
+                    <input type="submit" class="btn btn-primary" (click)="saveDieta()" value="Guardar" [disabled]="f.invalid">
                 </div>
                 <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">
                     <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>

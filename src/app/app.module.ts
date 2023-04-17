@@ -31,6 +31,8 @@ import { RouterModule } from '@angular/router';
 import { PlantillaDietaComponent } from './components/plantilla-dieta/plantilla-dieta.component';
 import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/plantilla-dieta-list.component';
 import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/plantilla-dieta-form.component';
+import { DietaComponent } from './components/dieta/dieta.component';
+import { DietaFormComponent } from './components/dieta-form/dieta-form.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/p
     DateValidatorDirective,
     PlantillaDietaComponent,
     PlantillaDietaListComponent,
-    PlantillaDietaFormComponent
+    PlantillaDietaFormComponent,
+    DietaComponent,
+    DietaFormComponent
   ],
   imports: [
     BrowserModule,

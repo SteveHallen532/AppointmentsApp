@@ -43,6 +43,10 @@
                 <th scope="col">Descripción</th>
                 <td scope="row">{{medicalHistory.descripcion}}</td>
             </tr>
+            <tr>
+                <th scope="col">Dieta en proceso</th>
+                <td scope="row">{{currentDieta}}</td>
+            </tr>
         </tbody>
     </table>
                 
@@ -67,7 +71,7 @@
             <a href="" class="btn btn-secondary btn-lg btn-block">Inbody</a>
         </div>
         <div class="row padding-top">
-            <a href="" class="btn btn-secondary btn-lg btn-block">Dieta</a>
+            <button (click)="goToDieta()" class="btn btn-secondary btn-lg btn-block">Dieta</button>
         </div>
     </div>      
 </div>

@@ -4,6 +4,8 @@ import { PlantillaDieta } from 'src/app/models/PlantillaDieta';
 import { PlantillaDietaService } from 'src/app/services/plantilla-dieta.service';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-plantilla-dieta-form',
@@ -15,10 +17,12 @@ export class PlantillaDietaFormComponent implements OnInit {
   plantillaDieta:PlantillaDieta = new PlantillaDieta;
   id:string;
   origin:string;
+  currentUser: Usuario;
 
-  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantilla_dieta_service:PlantillaDietaService, private location:Location) { }
+  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantilla_dieta_service:PlantillaDietaService, private location:Location, private auth_service:AuthenticationService) { }
 
   ngOnInit(): void {
+    this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.origin = this.activatedRoute.snapshot.params['origin'];
     this.id = this.activatedRoute.snapshot.params['id'];
     if(this.id != undefined) {
@@ -36,6 +40,7 @@ export class PlantillaDietaFormComponent implements OnInit {
 
   savePlantillaDieta() {
     if(this.id==undefined) {
+      this.plantillaDieta.organizacion = this.currentUser.organizacion;
       this.plantilla_dieta_service.newPlantillaDieta(this.plantillaDieta).subscribe(
         () => {this.router.navigate(['plantilla-dieta-list'])}
       )
