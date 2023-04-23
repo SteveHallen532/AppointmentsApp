@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { Dieta } from 'src/app/models/Dieta';
 import { PlantillaDietaService } from 'src/app/services/plantilla-dieta.service';
 import { PlantillaDieta } from 'src/app/models/PlantillaDieta';
 import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DietaService } from 'src/app/services/dieta.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dieta-form',
@@ -23,7 +24,10 @@ export class DietaFormComponent implements OnInit {
   dieta = new Dieta;
   currentDieta:Dieta;
   plantillaDietaList: PlantillaDieta[];
-  selected:PlantillaDieta;
+  selected:PlantillaDieta = new PlantillaDieta;
+  tipoControl = '';
+  descripcionControl = '';
+  fechaConrol = '';
 
   constructor(private auth_service: AuthenticationService, private plantilla_dieta_service:PlantillaDietaService, private dieta_service:DietaService, private location:Location, private activatedRoute:ActivatedRoute) { }
 
@@ -39,22 +43,26 @@ export class DietaFormComponent implements OnInit {
     this.getCurrentDieta(this.id)
 
     this.getPlantillaDietaList(this.auth_service.currentUserValue.organizacion._id);
+
   }
 
   getCurrentDieta(id:string) {
-    this.dieta_service.getCurrentDieta(this.dieta_id).subscribe(
+    this.dieta_service.getCurrentDieta(id).subscribe(
       result => {
-        this.currentDieta = result;
+        this.currentDieta = result[0];
       }
     )
   }
 
   getDieta(id:string) {
-    this.dieta_service.getDieta(this.id).subscribe(
+    this.dieta_service.getDieta(id).subscribe(
       result => {
         this.dieta = result;
         this.selected.tipo = this.dieta.tipo;
         this.selected.descripcion = this.dieta.descripcion;
+        this.tipoControl += this.dieta.tipo;
+        this.descripcionControl += this.dieta.descripcion;
+        this.fechaConrol += this.dieta.inicio;
       }
     )
   }
@@ -70,36 +78,137 @@ export class DietaFormComponent implements OnInit {
   saveDieta() {
     this.dieta.tipo = this.selected.tipo;
     this.dieta.descripcion = this.selected.descripcion;
+    this.dieta.current = true;
+    this.dieta.historia_clinica = this.id;
 
     if(this.dieta_id != undefined) {
-      this.dieta_service.updateDieta(this.dieta_id, this.dieta).subscribe(
-        () => {
-          //here goes confirmation message
+      Swal.fire({
+        title: 'Editar?',
+        text: "Guardar cambios?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Guardado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.dieta_service.updateDieta(this.dieta_id, this.dieta).subscribe(
+            () => {
+              this.location.back();
+            }
+          )
         }
-      )
+      })
+
     } else {
 
-      if(this.currentDieta!=undefined) {
+      if(this.currentDieta._id!=undefined) {
         this.currentDieta.fin = this.dieta.inicio;
-        this.dieta_service.updateDieta(this.currentDieta._id, this.currentDieta).subscribe(
-          () => {
-            this.dieta_service.newDieta(this.dieta).subscribe(
+        this.currentDieta.current = false;
+        Swal.fire({
+          title: 'Guardar?',
+          text: "Guardar cambios?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Guardar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Guardado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.dieta_service.updateDieta(this.currentDieta._id, this.currentDieta).subscribe(
               () => {
-                //here goes confirmation message
+                this.dieta_service.newDieta(this.dieta).subscribe(
+                  () => {
+                    this.location.back();
+                  }
+                )
               }
             )
           }
-        )
+        })
+        
+      } else {
+        Swal.fire({
+          title: 'Guardar?',
+          text: "Guardar cambios?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Guardar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Guardado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.dieta_service.newDieta(this.dieta).subscribe(
+              () => {
+                this.location.back();
+              }
+            )
+          }
+        })
+        
       }
     }
   }
 
   cancel() {
-    this.location.back();
+    if(this.selected.descripcion!=this.descripcionControl || this.selected.tipo!=this.tipoControl || this.dieta.inicio != this.fechaConrol) {
+      Swal.fire({
+        title: 'Seguro?',
+        text: "Desea salir sin guardar los datos?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Salir!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.location.back();
+        }
+      })
+    } else {
+      this.location.back();
+    }
   }
 
   back() {
-    this.location.back();
+    if(this.selected.descripcion!=this.descripcionControl || this.selected.tipo!=this.tipoControl || this.dieta.inicio != this.fechaConrol) {
+      Swal.fire({
+        title: 'Seguro?',
+        text: "Desea salir sin guardar los datos?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Salir!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.location.back();
+        }
+      })
+    } else {
+      this.location.back();
+    }
   }
    //Validation
  

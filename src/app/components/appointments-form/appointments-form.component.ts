@@ -55,6 +55,7 @@ export class AppointmentsFormComponent implements OnInit {
     }
 
     this.getAppointments();
+    console.log(this.appointments)
 
   }
 
@@ -310,12 +311,15 @@ export class AppointmentsFormComponent implements OnInit {
   }
 
   overlap() {
-    for(let i= 0; i <= this.appointments.length; i++) {
-      if (moment(this.appointment.fecha + ' ' + this.appointment.hora).isAfter(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora)) 
-      && moment(this.appointment.fecha + ' ' + this.appointment.hora).isBefore(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora_fin))) {
-        return true;
+    for(let i = 0; i < this.appointments.length; i++) {
+      if(this.appointments[i].asignado) {
+        if (moment(this.appointment.fecha + ' ' + this.appointment.hora).isSameOrAfter(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora)) 
+      && moment(this.appointment.fecha + ' ' + this.appointment.hora).isSameOrBefore(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora_fin))) {
+          return true;
+        }
       }
     }
+    return false;
   }
 
 }

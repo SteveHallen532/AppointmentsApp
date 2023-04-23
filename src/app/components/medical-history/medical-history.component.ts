@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { HistoriaClinica } from '../../models/HistoriaClinica';
 import { Patient } from '../../models/Patient';
 import { MedicalHistoryService } from '../../services/medical-history.service';
@@ -47,9 +47,9 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   getCurrentDieta() {
-    this.dieta_service.getDieta(this.id_medical_history).subscribe(
+    this.dieta_service.getCurrentDieta(this.id_medical_history).subscribe(
       result => {
-        this.currentDieta = result;
+        this.currentDieta = result[0];
       }
     )
   }
@@ -68,7 +68,7 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   goToDieta() {
-    this.router.navigate(['dieta/', this.medicalHistory._id, this.currentDieta._id])
+    this.router.navigate(['dieta/', this.medicalHistory._id, this.patient._id])
   }
 
   back() {

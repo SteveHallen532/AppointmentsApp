@@ -33,13 +33,19 @@ export class FilterByDatePipe implements PipeTransform {
     function dateValidation(date:string, date2:string, item:any):boolean{
      
       if(typeof item === 'object') {
-
+        // Consultas filter
         if(item.hasOwnProperty('fecha')) {
 
           if(moment(moment(item.fecha)).isSameOrAfter(moment(date))  && moment(moment(item.fecha)).isSameOrBefore(moment(date2))) {
             return true;
           }
 
+        }
+      // Dietas firter
+      } else if(item.hasOwnProperty('inicio')) {
+
+        if(moment(moment(item.inicio)).isSameOrAfter(moment(date))  && moment(moment(item.fin)).isSameOrBefore(moment(date2))) {
+          return true;
         }
 
       } else {

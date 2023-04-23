@@ -18,6 +18,8 @@ export class PlantillaDietaFormComponent implements OnInit {
   id:string;
   origin:string;
   currentUser: Usuario;
+  tipoControl = '';
+  descripcionControl = '';
 
   constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantilla_dieta_service:PlantillaDietaService, private location:Location, private auth_service:AuthenticationService) { }
 
@@ -34,6 +36,8 @@ export class PlantillaDietaFormComponent implements OnInit {
     this.plantilla_dieta_service.getPlantillaDieta(this.id).subscribe(
       result => {
         this.plantillaDieta = result;
+        this.tipoControl += this.plantillaDieta.tipo;
+        this.descripcionControl += this.plantillaDieta.descripcion
       }
     )
   }
@@ -42,24 +46,93 @@ export class PlantillaDietaFormComponent implements OnInit {
     if(this.id==undefined) {
       this.plantillaDieta.organizacion = this.currentUser.organizacion;
       this.plantilla_dieta_service.newPlantillaDieta(this.plantillaDieta).subscribe(
-        () => {this.router.navigate(['plantilla-dieta-list'])}
+        () => {
+
+            Swal.fire({
+              title: 'Guardar?',
+              text: "Guardar cambios?",
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Guardar!',
+              cancelButtonText: 'Cancelar',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Guardado',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this.router.navigate(['plantilla-dieta-list']);
+              }
+            }) 
+
+        }
       )
     } else {
       if(this.origin == 'list') {
-        this.plantilla_dieta_service.updatePlantillaDieta(this.id, this.plantillaDieta).subscribe(
-          () => {this.router.navigate(['plantilla-dieta-list'])}
-        )
+
+        Swal.fire({
+          title: 'Editar?',
+          text: "Guardar cambios?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Editar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Guardado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.plantilla_dieta_service.updatePlantillaDieta(this.id, this.plantillaDieta).subscribe(
+              () => {
+                this.router.navigate(['plantilla-dieta-list']);
+              }
+            )
+          }
+        })
+       
       } else {
-        this.plantilla_dieta_service.updatePlantillaDieta(this.id, this.plantillaDieta).subscribe(
-          () => {this.router.navigate(['plantilla-dieta-component', this.id])}
-        )
+
+        Swal.fire({
+          title: 'Editar?',
+          text: "Guardar cambios?",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Editar!',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Guardado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.plantilla_dieta_service.updatePlantillaDieta(this.id, this.plantillaDieta).subscribe(
+              () => {
+                this.router.navigate(['plantilla-dieta-component', this.id]);
+              }
+            )
+          }
+        })
+        
       }
     }
     
   }
 
   cancel() {
-    if(this.plantillaDieta.tipo != '' || this.plantillaDieta.descripcion != '') {
+    if(this.tipoControl != this.plantillaDieta.tipo || this.descripcionControl != this.plantillaDieta.descripcion) {
       Swal.fire({
         title: 'Seguro?',
         text: "Desea salir sin guardar los cambios?",
@@ -79,7 +152,7 @@ export class PlantillaDietaFormComponent implements OnInit {
   }
 
   back() {
-    if(this.plantillaDieta.tipo != '' || this.plantillaDieta.descripcion != '') {
+    if(this.tipoControl != this.plantillaDieta.tipo || this.descripcionControl != this.plantillaDieta.descripcion) {
       Swal.fire({
         title: 'Seguro?',
         text: "Desea salir sin guardar los cambios?",

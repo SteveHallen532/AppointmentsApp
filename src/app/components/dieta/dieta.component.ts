@@ -31,16 +31,16 @@ export class DietaComponent implements OnInit {
   }
 
   getCurrentDieta(id:string) {
-    this.dieta_service.getCurrentDieta(this.dieta_id).subscribe(
+    this.dieta_service.getCurrentDieta(this.id).subscribe(
       result => {
-        this.dieta = result;
+        this.dieta = result[0];
         this.loading = false;
       }
     )
   }
 
   getDieta(id:string) {
-    this.dieta_service.getDieta(this.id).subscribe(
+    this.dieta_service.getDieta(this.dieta_id).subscribe(
       result => {
         this.dieta = result;
         this.loading = false;
@@ -50,18 +50,26 @@ export class DietaComponent implements OnInit {
 
   //to select new
   goToForm() {
-    this.router.navigate(['dieta-form/', this.id]);
+    this.router.navigate(['/dieta-form/', this.id]);
   }
 
   //to edit current
-  goToDietaForm() {
-    this.router.navigate(['dieta-form/', this.id, this.dieta_id]);
+  goToEditForm() {
+    console.log(this.id, this.dieta_id)
+    this.router.navigate(['/dieta-form/', this.id, this.dieta._id]);
   }
   //must change to if i get here from history of diets
   back() {
     if(this.patient_id!=undefined) {
+      console.log(this.patient_id)
       this.router.navigate(['/medical-history/', this.id, this.patient_id])
-    } // else { ruta de historial cuando la cree }
+    } else if(this.dieta.current == false || this.patient_id==undefined) { 
+      this.location.back();
+     }
+  }
+
+  goToHistory() {
+    this.router.navigate(['/history/', this.id])
   }
 
 }

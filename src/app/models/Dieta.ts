@@ -1,6 +1,8 @@
+import { HistoriaClinica } from "./HistoriaClinica";
+
 export class Dieta {
     _id:string;
-    hc_id:string;
+    historia_clinica:string;
     inicio:string;
     fin:string;
     tipo:string;

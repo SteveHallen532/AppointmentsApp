@@ -22,6 +22,7 @@ export class PlantillaDietaListComponent implements OnInit {
   ngOnInit(): void {
     this.auth_service.currentUser.subscribe(x => {this.currentUser = x});
     this.getPlantillaDietaList(this.auth_service.currentUserValue.organizacion._id);
+    console.log('plantilla_dieta list',this.plantillaDietaList)
   }
 
   getPlantillaDietaList(organizacion_id) {
@@ -42,7 +43,7 @@ export class PlantillaDietaListComponent implements OnInit {
   }
 
   goToEditPlantillaDieta(id:string) {
-    this.router.navigate(['plantilla-dieta-form/', id]);
+    this.router.navigate(['plantilla-dieta-form/', id, 'list']);
   }
 
   delete(id:string) {

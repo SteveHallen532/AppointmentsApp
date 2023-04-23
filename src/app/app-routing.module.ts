@@ -22,6 +22,7 @@ import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/p
 import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/plantilla-dieta-list.component';
 import { DietaComponent } from './components/dieta/dieta.component';
 import { DietaFormComponent } from './components/dieta-form/dieta-form.component';
+import { DietsHistoryComponent } from './components/diets-history/diets-history.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent},
@@ -40,7 +41,6 @@ const routes: Routes = [
   {path:'', redirectTo: '/home', pathMatch: 'full' },
   {path:'consulta-form/:id_patient/:id/:id_consulta', component:ConsultaFormComponent, canActivate: [AuthGuard]},
   {path:'consulta-form/:id_patient/:id', component:ConsultaFormComponent, canActivate: [AuthGuard]},
-
   {path:'consultas/:id', component: ConsultasComponent, canActivate: [AuthGuard]},
   {path:'medical-history-form/:id/:id_patient', component: MedicalHistoryFormComponent, canActivate: [AuthGuard]},
   {path:'appointments-list', component: AppointmentsListComponent, canActivate: [AuthGuard]},
@@ -51,11 +51,12 @@ const routes: Routes = [
   {path:'plantilla-dieta-form', component:PlantillaDietaFormComponent, canActivate: [AuthGuard]},
   {path:'plantilla-dieta-form/:id', component:PlantillaDietaFormComponent, canActivate: [AuthGuard]},
   {path:'plantilla-dieta-form/:id/:origin', component:PlantillaDietaFormComponent, canActivate: [AuthGuard]},
-  {path:'dieta/:id/:patient_id/:dieta_id', component:DietaComponent, canActivate: [AuthGuard]},
+  //{path:'dieta/:id/:patient_id/:dieta_id', component:DietaComponent, canActivate: [AuthGuard]},
   {path:'dieta/:id/:patient_id', component:DietaComponent, canActivate: [AuthGuard]},
   {path:'history/dieta/:dieta_id', component:DietaComponent, canActivate: [AuthGuard]},
+  {path:'dieta-form/:id', component:DietaFormComponent, canActivate: [AuthGuard]},
   {path:'dieta-form/:id/:dieta_id', component:DietaFormComponent, canActivate: [AuthGuard]},
-  {path:'dieta-form/:id/', component:DietaFormComponent, canActivate: [AuthGuard]}
+  {path:'history/:id', component:DietsHistoryComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from '../../models/Patient';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PatientsService } from '../../services/patients.service';
-import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import Swal from 'sweetalert2';
@@ -21,6 +20,7 @@ export class PatientFormComponent implements OnInit {
 
   id: string = '';
   patient: Patient = new Patient;
+  controlPatient = new Patient;
   route:string = '';
   gender = ['Femenino', 'Masculino'];
   selected = 'Género';
@@ -29,7 +29,6 @@ export class PatientFormComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, 
               private patients_service:PatientsService, 
-              private router: Router,
               private auth_service: AuthenticationService,
               private location:Location) {}
 
@@ -47,6 +46,15 @@ export class PatientFormComponent implements OnInit {
     .subscribe(
       result =>{
         this.patient = result;
+        this.controlPatient.apellido += result.apellido;
+        this.controlPatient.dni += result.dni;
+        this.controlPatient.email += result.email;
+        this.controlPatient.fecha_nacimiento += result.fecha_nacimiento;
+        this.controlPatient.genero += result.genero;
+        this.controlPatient.nombre += result.nombre;
+        this.controlPatient.num_obra_social += result.num_obra_social;
+        this.controlPatient.obra_social += result.obra_social;
+        this.controlPatient.telefono += result.telefono;
         if (this.patient.genero != '') {
           this.selected = this.patient.genero;
         }
@@ -96,8 +104,13 @@ export class PatientFormComponent implements OnInit {
   }
 
   cancel(){
-
-    if(this.patient.nombre != '' && this.patient.apellido != '') {
+    if((this.id == "new" && this.patient.nombre != '' && this.patient.apellido != '') || 
+    (this.id != "new" && (this.controlPatient.apellido != this.patient.apellido || this.controlPatient.nombre != this.patient.nombre || 
+      this.controlPatient.dni != this.patient.dni || this.controlPatient.email != this.patient.email || 
+      this.controlPatient.fecha_nacimiento != this.patient.fecha_nacimiento || 
+      this.controlPatient.genero != this.selected || this.controlPatient.num_obra_social != this.patient.num_obra_social || 
+      this.controlPatient.obra_social != this.patient.obra_social || this.controlPatient.telefono != this.patient.telefono))) {
+      
       Swal.fire({
         title: 'Seguro?',
         text: "Desea salir sin guardar los cambios?",
@@ -118,7 +131,12 @@ export class PatientFormComponent implements OnInit {
   }
 
   back() {
-    if(this.patient.nombre != '' && this.patient.apellido != '') {
+    if(this.id == "new" && this.patient.nombre != '' && this.patient.apellido != '' || (this.id != "new" && (this.controlPatient.apellido != this.patient.apellido || 
+      this.controlPatient.nombre != this.patient.nombre || 
+      this.controlPatient.dni != this.patient.dni || this.controlPatient.email != this.patient.email || 
+      this.controlPatient.fecha_nacimiento != this.patient.fecha_nacimiento || 
+      this.controlPatient.genero != this.selected || this.controlPatient.num_obra_social != this.patient.num_obra_social || 
+      this.controlPatient.obra_social != this.patient.obra_social || this.controlPatient.telefono != this.patient.telefono))) {
       Swal.fire({
         title: 'Seguro?',
         text: "Desea salir sin guardar los cambios?",

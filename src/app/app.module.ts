@@ -33,6 +33,7 @@ import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/p
 import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/plantilla-dieta-form.component';
 import { DietaComponent } from './components/dieta/dieta.component';
 import { DietaFormComponent } from './components/dieta-form/dieta-form.component';
+import { DietsHistoryComponent } from './components/diets-history/diets-history.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { DietaFormComponent } from './components/dieta-form/dieta-form.component
     PlantillaDietaListComponent,
     PlantillaDietaFormComponent,
     DietaComponent,
-    DietaFormComponent
+    DietaFormComponent,
+    DietsHistoryComponent
   ],
   imports: [
     BrowserModule,

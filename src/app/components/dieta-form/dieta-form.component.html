@@ -8,12 +8,16 @@
 <p class="h1 text-center">Dieta</p>
 
 <form action="submit" novalidate #f="ngForm">
-    <div class="form-control padding">
-        <select class="form-select form-select-sm" aria-label="select tipo" *ngFor="let plantilla of plantillaDietaList" [(ngModel)]="selected">
-            <option value="{{plantilla}}">{{plantilla.tipo}}</option>
-          </select>
-    </div>
+    
     <div class="form-group padding">
+
+        <label for="select">Plantillas:</label>
+        <div class="padding">
+            <select class="form-select" id="select" aria-label="select tipo" name="selected" [(ngModel)]="selected">
+                <option *ngFor="let plantilla of plantillaDietaList" [ngValue]="plantilla">{{plantilla.tipo}}</option>
+            </select>
+        </div>
+
         <label for="date">Fecha de inicio:</label>
         <input type="date" class="form-control" name="fecha_inicio" id="date" [(ngModel)]="dieta.inicio" #date="ngModel"
         [ngStyle]="{'border': (date.invalid || isBefore(date.value)) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01" required>
