@@ -34,6 +34,9 @@ import { PlantillaDietaFormComponent } from './components/plantilla-dieta-form/p
 import { DietaComponent } from './components/dieta/dieta.component';
 import { DietaFormComponent } from './components/dieta-form/dieta-form.component';
 import { DietsHistoryComponent } from './components/diets-history/diets-history.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { InbodyComponent } from './components/inbody/inbody.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 
 @NgModule({
@@ -63,7 +66,9 @@ import { DietsHistoryComponent } from './components/diets-history/diets-history.
     PlantillaDietaFormComponent,
     DietaComponent,
     DietaFormComponent,
-    DietsHistoryComponent
+    DietsHistoryComponent,
+    InbodyComponent,
+    DragAndDropDirective
   ],
   imports: [
     BrowserModule,
@@ -72,7 +77,8 @@ import { DietsHistoryComponent } from './components/diets-history/diets-history.
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    AngularEditorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

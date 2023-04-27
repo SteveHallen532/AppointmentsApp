@@ -113,6 +113,9 @@ export class AppointmentsFormComponent implements OnInit {
     this.appointment.sobreturno = true;
     this.appointment.asignado = true;
     this.appointment.organizacion=this.currentUser.organizacion;
+    console.log(moment(this.appointment.hora,'hh:mm'));
+    this.appointment.hora_fin = moment(this.appointment.hora,'hh:mm').add(5,'m').format('hh:mm');
+    console.log(this.appointment.hora_fin);
 
     if(this.overlap() == true) {
       Swal.fire({
@@ -122,38 +125,27 @@ export class AppointmentsFormComponent implements OnInit {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, eliminar!',
+        confirmButtonText: 'Si, asignar!',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: 'Asignar?',
-            text: "Asignar sobreturno a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Asignar!',
-            cancelButtonText: 'Cancelar',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.appointment_service.newAppointment(this.appointment).subscribe(
-                  () => {
-                    Swal.fire({
-                      position: 'center',
-                      icon: 'success',
-                      title: 'Sobreturno asignado',
-                      showConfirmButton: false,
-                      timer: 1500
-                    }) 
-                  }
-                )         
+            this.appointment_service.newAppointment(this.appointment).subscribe(
+              () => {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Sobreturno asignado',
+                  text: "Sobreturno asignado a " + this.appointment.patient.nombre + ' ' + this.appointment.patient.apellido + ' el ' + moment(this.appointment.fecha).format('DD/MM/YYYY') + ' a las ' + this.appointment.hora,
+                  showConfirmButton: false,
+                  timer: 1500
+                }) 
               }
-              if(this.idPatient == undefined) {
-                this.router.navigate(['/appointments-list']);
-              } else {
-                this.router.navigate(['/consultas/', this.idPatient]);
-              }
-            })
+            )         
+          }
+          if(this.idPatient == undefined) {
+            this.router.navigate(['/appointments-list']);
+          } else {
+            this.router.navigate(['/consultas/', this.idPatient]); 
         }
       })
     } else {
@@ -311,6 +303,7 @@ export class AppointmentsFormComponent implements OnInit {
   }
 
   overlap() {
+    console.log("Evaluating overlapping")
     for(let i = 0; i < this.appointments.length; i++) {
       if(this.appointments[i].asignado) {
         if (moment(this.appointment.fecha + ' ' + this.appointment.hora).isSameOrAfter(moment(this.appointments[i].fecha + ' ' + this.appointments[i].hora)) 

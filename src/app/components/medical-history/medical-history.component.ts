@@ -71,6 +71,10 @@ export class MedicalHistoryComponent implements OnInit {
     this.router.navigate(['dieta/', this.medicalHistory._id, this.patient._id])
   }
 
+  goToInbody() {
+    this.router.navigate(['inbody/', this.id_medical_history])
+  }
+
   back() {
     this.router.navigate(['/consultas', this.id_patient])
     }

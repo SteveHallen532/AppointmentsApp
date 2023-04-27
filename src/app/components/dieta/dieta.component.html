@@ -35,7 +35,7 @@
         <tbody>
           <tr>
             <th scope="row" *ngIf="dieta?.tipo!='' && dieta?.tipo!=undefined; else elseBlock">{{dieta?.tipo}}</th>
-            <td *ngIf="dieta?.descripcion!='' && dieta?.descripcion!=undefined; else elseBlock2">{{dieta?.descripcion}}</td>
+            <td *ngIf="dieta?.descripcion!='' && dieta?.descripcion!=undefined; else elseBlock2" [innerHTML]="dieta?.descripcion"></td>
             <ng-template #elseBlock>
                 <td>No hay dietas activas.</td>
             </ng-template>

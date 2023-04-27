@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" placeholder="Titulo" name="title" id="inp-title" [(ngModel)]="announcement.title" required>
             </div>
             <div class="row padding">
-                <textarea class="form-control" name="body" id="inp-body" rows="3" [(ngModel)]="announcement.body" required></textarea>
+                <angular-editor class="form-control" name="body" id="inp-body" [(ngModel)]="announcement.body" required></angular-editor>
             </div>
             <div class="container">
                 <div class="d-flex flex-row-reverse padding">
@@ -45,7 +45,7 @@
                                 <button type="button" class="btn-close" aria-label="Close" (click)="delete(announcement._id)"></button>
                             </div>
                         </div>
-                        <p class="card-text">{{announcement.body}}</p>
+                        <p class="card-text" [innerHTML]="announcement.body"></p>
                     </div>
                 </div>
             </div>

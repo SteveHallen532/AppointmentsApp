@@ -12,7 +12,7 @@
         <label for="inp-description">Tipo</label>
         <div class="row padding">
             <input type="text" class="form-control" name="tipo" id="inp-tipo" [(ngModel)]="plantillaDieta.tipo" #tipo="ngModel" required
-            [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off">
+            [ngStyle]="{'border': (tipo.invalid && (tipo.dirty || tipo.touched))? '1px solid red' : ''}" autocomplete="off">
             <div *ngIf="tipo.dirty || tipo.touched" class="alert-div">
                 <div *ngIf="tipo.invalid">
                     <p *ngIf="tipo.errors?.['required']" class="alert">
@@ -25,8 +25,11 @@
     <div class="form-group padding">
         <label for="inp-description">Descripción</label>
         <div class="row padding">
-            <textarea class="form-control" name="description" id="inp-description" rows="20" [(ngModel)]="plantillaDieta.descripcion" #descripcion="ngModel" required
-            [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off"></textarea>
+            
+            <!-- <angular-editor [(ngModel)]="plantillaDieta.descripcion" name="description" id="inp-description" [config]="config" required></angular-editor> -->
+            
+            <angular-editor class="form-control" name="description" id="inp-description" rows="20" [config]="config" [(ngModel)]="plantillaDieta.descripcion" #descripcion="ngModel" required
+            [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off"></angular-editor>
             <div *ngIf="descripcion.dirty || descripcion.touched" class="alert-div">
                 <div *ngIf="descripcion.invalid">
                     <p *ngIf="descripcion.errors?.['required']" class="alert">
@@ -34,6 +37,8 @@
                     </p>
                 </div>
             </div>
+
+
         </div>
     </div>
     <div>

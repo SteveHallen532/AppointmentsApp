@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-plantilla-dieta-form',
@@ -20,6 +22,27 @@ export class PlantillaDietaFormComponent implements OnInit {
   currentUser: Usuario;
   tipoControl = '';
   descripcionControl = '';
+
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '70vh',
+    minHeight: '5rem',
+    placeholder: 'Seleccione una plantilla o ingrese una descripción....',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    customClasses: [
+      {
+        name: 'Quote',
+        class: 'quoteClass',
+      },
+      {
+        name: 'Title Heading',
+        class: 'titleHead',
+        tag: 'h1',
+      },
+    ],
+  };
 
   constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantilla_dieta_service:PlantillaDietaService, private location:Location, private auth_service:AuthenticationService) { }
 

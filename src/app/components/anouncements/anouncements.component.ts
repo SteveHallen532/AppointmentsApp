@@ -5,6 +5,8 @@ import { Announcement } from '../../models/Announcement';
 import { AnnouncementsService } from '../../services/announcements.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-anouncements',
@@ -18,6 +20,27 @@ export class AnouncementsComponent implements OnInit {
   announcement:Announcement = new Announcement;
 
   currentUser: Usuario;
+
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '70vh',
+    minHeight: '5rem',
+    placeholder: 'Seleccione una plantilla o ingrese una descripción....',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    customClasses: [
+      {
+        name: 'Quote',
+        class: 'quoteClass',
+      },
+      {
+        name: 'Title Heading',
+        class: 'titleHead',
+        tag: 'h1',
+      },
+    ],
+  };
 
   constructor(private announcement_service:AnnouncementsService,
               private auth_service: AuthenticationService,

@@ -22,7 +22,7 @@
       <tbody>
         <tr>
           <th scope="row">{{plantillaDieta.tipo}}</th>
-          <td>{{plantillaDieta.descripcion}}</td>
+          <td [innerHTML]="plantillaDieta?.descripcion"></td>
           <td>
             <button type="button" class="btn btn-primary" (click)="goToForm(plantillaDieta._id)">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

@@ -23,6 +23,7 @@ import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/p
 import { DietaComponent } from './components/dieta/dieta.component';
 import { DietaFormComponent } from './components/dieta-form/dieta-form.component';
 import { DietsHistoryComponent } from './components/diets-history/diets-history.component';
+import { InbodyComponent } from './components/inbody/inbody.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent},
@@ -56,7 +57,8 @@ const routes: Routes = [
   {path:'history/dieta/:dieta_id', component:DietaComponent, canActivate: [AuthGuard]},
   {path:'dieta-form/:id', component:DietaFormComponent, canActivate: [AuthGuard]},
   {path:'dieta-form/:id/:dieta_id', component:DietaFormComponent, canActivate: [AuthGuard]},
-  {path:'history/:id', component:DietsHistoryComponent, canActivate: [AuthGuard]}
+  {path:'history/:id', component:DietsHistoryComponent, canActivate: [AuthGuard]},
+  {path:'inbody/:id', component:InbodyComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

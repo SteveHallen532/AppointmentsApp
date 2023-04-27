@@ -9,6 +9,8 @@ import { Usuario } from 'src/app/models/Usuario';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DietaService } from 'src/app/services/dieta.service';
 import Swal from 'sweetalert2';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dieta-form',
@@ -28,6 +30,28 @@ export class DietaFormComponent implements OnInit {
   tipoControl = '';
   descripcionControl = '';
   fechaConrol = '';
+  
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '70vh',
+    minHeight: '5rem',
+    placeholder: 'Seleccione una plantilla o ingrese una descripción....',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    customClasses: [
+      {
+        name: 'Quote',
+        class: 'quoteClass',
+      },
+      {
+        name: 'Title Heading',
+        class: 'titleHead',
+        tag: 'h1',
+      },
+    ],
+  };
+
 
   constructor(private auth_service: AuthenticationService, private plantilla_dieta_service:PlantillaDietaService, private dieta_service:DietaService, private location:Location, private activatedRoute:ActivatedRoute) { }
 
@@ -40,7 +64,9 @@ export class DietaFormComponent implements OnInit {
       this.getDieta(this.dieta_id);  
     }
 
-    this.getCurrentDieta(this.id)
+    if(this.dieta_id==undefined) {
+      this.getCurrentDieta(this.id);
+    }
 
     this.getPlantillaDietaList(this.auth_service.currentUserValue.organizacion._id);
 
