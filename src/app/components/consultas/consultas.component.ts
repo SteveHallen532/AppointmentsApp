@@ -24,6 +24,10 @@ export class ConsultasComponent implements OnInit {
 
   loading = true;
 
+  showConsultas = false;
+
+  showAppointments = false;
+
   id_patient: string = '';
 
   patient = new Patient;
@@ -52,6 +56,7 @@ export class ConsultasComponent implements OnInit {
     .subscribe(
       result => {
         this.patient = result;
+        this.loading = false;
       }
     )
   }          
@@ -61,7 +66,6 @@ export class ConsultasComponent implements OnInit {
     .subscribe(
       result =>{
         this.consultas = result;
-        this.loading = false;
         this.filterDatesConsultas(this.consultas);
       }
     );
@@ -131,6 +135,26 @@ export class ConsultasComponent implements OnInit {
 
   goToAppointmentsList(id:string) {
     this.router.navigate(['/appointments-list/', this.id_patient])
+  }
+
+  show (str:string) {
+    switch(str) {
+      case 'showConsultas':
+        if(this.showConsultas == true) {
+          this.showConsultas = false;
+        } else {
+          this.showConsultas = true;
+        }
+      break;
+
+      case 'showAppointments':
+        if(this.showAppointments == true) {
+          this.showAppointments = false;
+        } else {
+          this.showAppointments = true;
+        }
+      break;
+    }
   }
 
   back() {

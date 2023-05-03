@@ -1,0 +1,9 @@
+.card {
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 80vw;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 4px rgb(225, 226, 234);
+}

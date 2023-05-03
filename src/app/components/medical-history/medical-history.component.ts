@@ -16,6 +16,8 @@ export class MedicalHistoryComponent implements OnInit {
 
   loading = true;
 
+  showMedicalHistory = false;
+
   id_patient: string = '';
 
   id_medical_history = '';
@@ -73,6 +75,14 @@ export class MedicalHistoryComponent implements OnInit {
 
   goToInbody() {
     this.router.navigate(['inbody/', this.id_medical_history])
+  }
+
+  show() {
+    if (this.showMedicalHistory == true) {
+      this.showMedicalHistory = false;
+    } else {
+      this.showMedicalHistory = true;
+    }
   }
 
   back() {
