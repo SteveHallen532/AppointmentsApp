@@ -1,9 +1,23 @@
 .card {
     padding: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-width: 80vw;
-    max-height: 80vh;
+    width: 90vw;
+    height: 70vh;
     border-radius: 10px;
     box-shadow: 0 0 4px 4px rgb(225, 226, 234);
+}
+
+.overflow {
+    width: 88vw;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.overflow:hover {
+    overflow: auto;
+}
+
+.width-fixed {
+    padding-left: 3vw;
+    width: 83vw;
+    height: 58vh;
 }
