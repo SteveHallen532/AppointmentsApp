@@ -1,5 +1,5 @@
 <div *ngIf="idPatient == undefined">
-    <button class="btn btn-primary" (click)="back()">
+    <button class="btn btn-primary btn-icon" (click)="back()">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
           </svg>
@@ -11,7 +11,7 @@
     </div>
 </div>
 <div *ngIf="loading == false">
-    <div class="container">
+    <div class="container padding-top">
         <div *ngIf="appointmentsInput.length <= 0">
             <p class="h1">Turnos</p>
         </div>
@@ -19,38 +19,38 @@
             <div clas="col-2">
                 <p class="h6">Filtrar por fecha</p>
                <div class="row">
-                <div class="col-3">
+                <div class="col-6 col-lg-3">
                     <input type="date" class="form-control" [(ngModel)]="date1">
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-lg-3">
                     <input type="date" class="form-control" [(ngModel)]="date2">
                 </div>
                </div>
             </div>
-            <div class="d-flex justify-content-end" *ngIf="appointmentsInput.length <= 0">
+            <div class="d-flex justify-content-end padding-top" *ngIf="appointmentsInput.length <= 0">
                 <button class="btn btn-secondary" (click)="squeezeIn()">Sobre Turno</button>
             </div>
         </div>
         <div *ngIf="appointments.length > 0">
-            <div class="list-group padding-top">
+            <div class="list-group">
                 <div *ngFor="let date of dates | filterByDate: date1 : date2">
                     <p class="h5 capitalize">{{calendarize(date)}}</p>
                     <div  *ngFor="let appointment of appointments">
                         <div *ngIf="isSameDate(date, appointment.fecha)">
                             <div class="row">
-                                <div class="col-7 col-sm-8 col-md-9 col-lg-10">
+                                <div class="col-5 col-lg-10">
                                     <div [ngStyle]="{'background-color': appointment.sobreturno == true ? 'green': appointment.asignado == true && appointment.confirmado == true? 'LightSteelBlue': appointment.enabled == false? 'grey': appointment.asignado == true? 'PowderBlue': 'white'}" class="list-group-item list-group-item-action">{{appointment.hora}} {{appointment.patient?.nombre}} {{appointment.patient?.apellido}}</div>
                                 </div>
-                                <div class="col-3 col-lg-2" *ngIf="appointment.asignado == true; else elseBlock">
+                                <div class="col-5 col-sm-4 col-md-3 col-lg-2" *ngIf="appointment.asignado == true; else elseBlock">
                                     <div class="row" *ngIf="appointment.sobreturno == false; else elseBlock1">
                                         <div class="col-6 col-xl-5 padding-left">
                                             <button class="btn btn-secondary" (click)="unAssign(appointment._id)">Liberar</button>
                                         </div>
-                                        <div *ngIf="appointment.confirmado == false; else elseBlockTrue" class="col-6">
+                                        <div *ngIf="appointment.confirmado == false; else elseBlockTrue" class="col-6 col-xl-5 padding-left">
                                             <button class="btn btn-secondary" (click)="confirm(appointment._id, appointment)">Confirmar</button>
                                         </div>
                                         <ng-template #elseBlockTrue>
-                                            <div class="col-6 col-xl-5">
+                                            <div class="col-6 col-xl-5 padding-left">
                                                 <button class="btn btn-secondary" (click)="disConfirm(appointment._id, appointment)">Desconfirmar</button>
                                             </div>
                                         </ng-template>

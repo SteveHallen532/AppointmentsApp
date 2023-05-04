@@ -1,0 +1,12 @@
+.list {
+    margin-top: 35px;
+    border-radius: 10px;
+    border: solid 1px rgb(215, 216, 227);
+    height: fit-content;
+    max-height: 30vh;
+}
+
+.overflow-auto {
+    height: fit-content;
+    max-height: 20vh;
+}

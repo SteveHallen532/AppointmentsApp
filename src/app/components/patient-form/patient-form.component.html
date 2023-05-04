@@ -110,24 +110,20 @@
                 </div>
             </div>
         </div>
-        <div class="row padding">
-            <div class="padding-bottom">
-                <label for="inp-birthday">Fecha de nacimiento</label>
-            </div>
-            <div class="padding-bottom">
-                <input type="date" class="form-control" name="birthday" id="inp-birthday" [(ngModel)]="patient.fecha_nacimiento" #date="ngModel"
-                [ngStyle]="{'border': isBefore(date.value) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01">
-                <div class="alert-div">
-                    <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
-                        <p class="alert">
-                            La fecha no puede ser posterior al día de hoy.
-                        </p>
-                    </div>
-                    <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
-                        <p class="alert">
-                            Fecha inválida.
-                        </p>
-                    </div>
+        <div class="form-group row padding">
+            <label style="padding-bottom: 10px;" for="inp-birthday">Fecha de nacimiento</label>
+            <input type="date" class="form-control" name="birthday" id="inp-birthday" [(ngModel)]="patient.fecha_nacimiento" #date="ngModel"
+            [ngStyle]="{'border': isBefore(date.value) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01">
+            <div class="alert-div">
+                <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        La fecha no puede ser posterior al día de hoy.
+                    </p>
+                </div>
+                <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        Fecha inválida.
+                    </p>
                 </div>
             </div>
         </div>

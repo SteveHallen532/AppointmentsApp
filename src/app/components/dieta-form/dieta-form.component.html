@@ -1,5 +1,5 @@
 <div>
-    <button class="btn btn-primary" (click)="back()">
+    <button class="btn btn-primary btn-icon" (click)="back()">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
           </svg>
@@ -8,40 +8,37 @@
 <p class="h1 text-center">Dieta</p>
 
 <form action="submit" novalidate #f="ngForm">
-    
-    <div class="form-group padding">
-
-        <label for="select">Plantillas:</label>
-        <div class="padding">
+    <div class="container">
+        <div class="form-group padding">
+            <label for="select">Plantillas:</label>
             <select class="form-select" id="select" aria-label="select tipo" name="selected" [(ngModel)]="selected">
                 <option *ngFor="let plantilla of plantillaDietaList" [ngValue]="plantilla">{{plantilla.tipo}}</option>
             </select>
         </div>
-
-        <label for="date">Fecha de inicio:</label>
-        <input type="date" class="form-control" name="fecha_inicio" id="date" [(ngModel)]="dieta.inicio" #date="ngModel"
-        [ngStyle]="{'border': (date.invalid || isBefore(date.value)) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01" required>
-        <div class="alert-div">
-            <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
-                <p class="alert">
-                    La fecha no puede ser posterior al día de hoy.
-                </p>
-            </div>
-            <div *ngIf="date.errors?.['required'] && (date.dirty || date.touched)" class="alert-div">
-                <p class="alert">
-                    Completa este campo.
-                </p>
-            </div>
-            <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
-                <p class="alert">
-                    Fecha inválida.
-                </p>
+        <div class="form-group padding">
+            <label for="date">Fecha de inicio:</label>
+            <input type="date" class="form-control" name="fecha_inicio" id="date" [(ngModel)]="dieta.inicio" #date="ngModel"
+            [ngStyle]="{'border': (date.invalid || isBefore(date.value)) && (date.dirty || date.touched)? '1px solid red' : ''}" max={{today}} min="1920-01-01" required>
+            <div class="alert-div">
+                <div *ngIf="isBefore(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        La fecha no puede ser posterior al día de hoy.
+                    </p>
+                </div>
+                <div *ngIf="date.errors?.['required'] && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        Completa este campo.
+                    </p>
+                </div>
+                <div *ngIf="outOfRange(date.value) && (date.dirty || date.touched)" class="alert-div">
+                    <p class="alert">
+                        Fecha inválida.
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group padding">
-        <label for="inp-description">Tipo</label>
-        <div class="row padding">
+        <div class="form-group padding">
+            <label for="inp-description">Tipo</label>
             <input type="text" class="form-control" name="tipo" id="inp-tipo" [(ngModel)]="selected.tipo" #tipo="ngModel" required
             [ngStyle]="{'border': (tipo.invalid && (tipo.dirty || tipo.touched))? '1px solid red' : ''}" autocomplete="off">
             <div *ngIf="tipo.dirty || tipo.touched" class="alert-div">
@@ -52,14 +49,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group padding">
-        <label for="inp-description">Descripción</label>
-        <div class="row padding">
-
-            <!-- <angular-editor [(ngModel)]="selected.descripcion" name="description" id="inp-description" [config]="config"></angular-editor> -->
-
-
+        <div class="form-group padding">
+            <label for="inp-description">Descripción</label>    
             <angular-editor class="form-control" name="description" id="inp-description" rows="20" [config]="config" [(ngModel)]="selected.descripcion" #descripcion="ngModel" required
             [ngStyle]="{'border': (descripcion.invalid && (descripcion.dirty || descripcion.touched))? '1px solid red' : ''}" autocomplete="off"></angular-editor>
             <div *ngIf="descripcion.dirty || descripcion.touched" class="alert-div">
@@ -69,11 +60,7 @@
                     </p>
                 </div>
             </div>
-
-
         </div>
-    </div>
-    <div>
         <div class="container">
             <div class="d-flex flex-row-reverse padding-top">
                 <div class="col-6 col-lg-2 col-xl-1 d-flex justify-content-center">

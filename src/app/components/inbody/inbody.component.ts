@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Inbody } from 'src/app/models/inbody';
 import { InbodyService } from 'src/app/services/inbody.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-inbody',
@@ -39,7 +40,7 @@ export class InbodyComponent implements OnInit {
     }
   ]
 
-  constructor(private fileUploadService: UploadService, private activatedRoute:ActivatedRoute, private inbody_service:InbodyService) {}
+  constructor(private fileUploadService: UploadService, private activatedRoute:ActivatedRoute, private inbody_service:InbodyService, private location:Location) {}
 
   ngOnInit(): void { 
     this.id = this.activatedRoute.params['id'];
@@ -79,6 +80,10 @@ export class InbodyComponent implements OnInit {
     //   console.error(error);
     //   this.file = undefined;
     // });
+  }
+
+  back() {
+    this.location.back();
   }
 
 }
