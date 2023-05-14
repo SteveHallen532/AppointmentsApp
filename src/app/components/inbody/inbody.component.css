@@ -2,27 +2,32 @@
     display: none;
   }
 
-  .drop-zone {
-    border: 2px dashed #ccc;
-    border-radius: 10px;
-    width: 400px;
-    height: 350px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
+.drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  width: 400px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
-  .drag-over {
-    background-color: #eee;
-  }
+.drag-over {
+  background-color: #eee;
+}
 
-  .drop-zone-text {
-    font-size: 1.5rem;
-    text-align: center;
-    color: #888;
-  }
+.drop-zone-text {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #888;
+}
 
-  .padding-top-10 {
-    padding-top: 10px;
-  }
+.padding-top-10 {
+  padding-top: 10px;
+}
+
+.list {
+  max-height: 50vh;
+
+}

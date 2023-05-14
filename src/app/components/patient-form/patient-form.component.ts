@@ -104,11 +104,17 @@ export class PatientFormComponent implements OnInit {
   }
 
   cancel(){
+    if (this.selected == 'Género') {
+      this.patient.genero = '';
+    } else {
+      this.patient.genero = this.selected;
+    }
+    console.log(this.controlPatient.genero, this.selected)
     if((this.id == "new" && this.patient.nombre != '' && this.patient.apellido != '') || 
-    (this.id != "new" && (this.controlPatient.apellido != this.patient.apellido || this.controlPatient.nombre != this.patient.nombre || 
+    ((this.id != "new") && (this.controlPatient.apellido != this.patient.apellido || this.controlPatient.nombre != this.patient.nombre || 
       this.controlPatient.dni != this.patient.dni || this.controlPatient.email != this.patient.email || 
       this.controlPatient.fecha_nacimiento != this.patient.fecha_nacimiento || 
-      this.controlPatient.genero != this.selected || this.controlPatient.num_obra_social != this.patient.num_obra_social || 
+      this.controlPatient.genero != this.patient.genero || this.controlPatient.num_obra_social != this.patient.num_obra_social || 
       this.controlPatient.obra_social != this.patient.obra_social || this.controlPatient.telefono != this.patient.telefono))) {
       
       Swal.fire({

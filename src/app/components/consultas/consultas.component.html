@@ -58,8 +58,9 @@
           <table class="table table-striped table-bordered dtHorizontalVerticalWrapper">
             <thead>
               <tr>
-                <th scope="col">Fecha</th>
+                <th style="width: 8%;" scope="col">Fecha</th>
                 <th scope="col">Peso</th>
+                <th scope="col">Diferencia peso</th>
                 <th scope="col">Circunferencia de cintura</th>
                 <th scope="col">Circunferencia de cintura baja</th>
                 <th scope="col">Cadera</th>
@@ -74,9 +75,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let consulta of consultas| filterByDate: date1 : date2">
-                <th scope="row">{{consulta.fecha}}</th>
+              <tr *ngFor="let consulta of consultas | filterByDate: date1 : date2">
+                <th scope="row">{{date(consulta.fecha)}}</th>
                 <td>{{consulta.peso}}</td>
+                <td [innerHTML]="waightDiference(consulta)"></td>
                 <td>{{consulta.circunferencia_de_cintura}}</td>
                 <td>{{consulta.circunferencia_de_cintura_baja}}</td>
                 <td>{{consulta.cadera}}</td>

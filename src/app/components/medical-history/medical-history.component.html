@@ -73,16 +73,10 @@
                 </tr>
                 <tr>
                     <th scope="col">Dieta en proceso</th>
-                    <td scope="row">{{currentDieta.tipo}}</td>
+                    <td scope="row">{{currentDieta?.tipo}}</td>
                 </tr>
             </tbody>
         </table>
-
-        <div class="col-12">
-            <div id="card" class="card container overflow-auto" style="white-space:pre-wrap;" *ngIf="medicalHistory.descripcion != ''">
-                <p></p>
-            </div>
-        </div>
 
     </div>
                 

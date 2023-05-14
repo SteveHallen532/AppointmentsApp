@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4000/api'
+  apiUrl: 'http://localhost:4000/api',
+  firebase: {
+    apiKey: 'AIzaSyCX-ZvWh_CDA8TxFNYqaXLWv5kZaQf04fE',
+    authDomain: 'softinmo532.firebaseapp.com',
+    databaseURL: 'https://softinmo532.firebaseio.com',
+    projectId: 'softinmo532',
+    storageBucket: 'softinmo532.appspot.com',
+    messagingSenderId: '<your-messaging-sender-id>'
+  }
 };
 
 /*

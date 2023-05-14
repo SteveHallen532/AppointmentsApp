@@ -10,9 +10,17 @@ import { environment } from 'src/environments/environment';
 export class InbodyService {
 
   constructor(private http:HttpClient) { }
-//como guardo la url de los archivos en un modelo de Inbody
+
   getInbodyList(hc_id:string):Observable<Inbody[]>{
-    return this.http.get<Inbody[]>(`${environment.apiUrl}//`+hc_id+`/list`)
+    return this.http.get<Inbody[]>(`${environment.apiUrl}/historia_clinica/`+hc_id+`/inbody`)
+  }
+
+  saveInbody(inbody:Inbody):Observable<any> {
+    return this.http.post<Inbody>(`${environment.apiUrl}/historia_clinica/inbody`, inbody)
+  }
+
+  deleteInbody(id:string):Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/historia_clinica/inbody/`+id)
   }
 
 }

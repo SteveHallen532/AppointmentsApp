@@ -35,19 +35,26 @@ export class FilterByDatePipe implements PipeTransform {
       if(typeof item === 'object') {
         // Consultas filter
         if(item.hasOwnProperty('fecha')) {
+          console.log('item: ', moment(item.fecha), 'filters', moment(date), moment(date2))
 
           if(moment(moment(item.fecha)).isSameOrAfter(moment(date))  && moment(moment(item.fecha)).isSameOrBefore(moment(date2))) {
             return true;
           }
 
+        // Dietas firter
+        } else if(item.hasOwnProperty('inicio')) {
+          console.log('its a diet, double dates', 'init', moment(date),moment(moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY')), 'dieta', moment(item.inicio, 'DD/MM/YYYY'),'fin',moment(date2).format('DD MM YYYY') ,'dieta', moment(item.fin, 'DD MM YYYY'))
+          if(item.fin == 'Actual') {
+            if(moment(item.inicio, 'DD/MM/YYYY').isSameOrAfter(moment(date))  && moment(moment().format('DD/MM/YYYY')).isSameOrBefore(moment(date2))) {
+              return true;
+            }
+          } else {
+            if(moment(item.inicio, 'DD/MM/YYYY').isSameOrAfter(moment(date))  && moment(item.fin, 'DD/MM/YYYY').isSameOrBefore(moment(date2))) {
+              return true;
+            }
+          }
         }
-      // Dietas firter
-      } else if(item.hasOwnProperty('inicio')) {
-
-        if(moment(moment(item.inicio)).isSameOrAfter(moment(date))  && moment(moment(item.fin)).isSameOrBefore(moment(date2))) {
-          return true;
-        }
-
+      
       } else {
         console.log('is not an object')
 
@@ -69,6 +76,13 @@ export class FilterByDatePipe implements PipeTransform {
             return true;
           }
 
+        } else if(item.hasOwnProperty('inicio')) {
+          console.log('its a diet, init date')
+
+          if(moment(item.inicio, 'DD/MM/YYYY').isSameOrAfter(moment(date))) {
+            return true;
+          }
+  
         }
 
       } else {
@@ -92,6 +106,18 @@ export class FilterByDatePipe implements PipeTransform {
             return true;
           }
 
+        } else if(item.hasOwnProperty('inicio')) {
+          console.log('its a diet, fin date')
+
+          if(item.fin == 'Actual') {
+            if(moment(moment().format('DD/MM/YYYY')).isSameOrBefore(moment(date2))) {
+              return true;
+            }
+          } else {
+            if(moment(item.fin, 'DD/MM/YYYY').isSameOrBefore(moment(date2))) {
+              return true;
+            }
+          }
         }
 
       } else {

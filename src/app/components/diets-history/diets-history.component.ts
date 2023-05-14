@@ -4,6 +4,7 @@ import { Dieta } from 'src/app/models/Dieta';
 import { HistoriaClinica } from 'src/app/models/HistoriaClinica';
 import { DietaService } from 'src/app/services/dieta.service';
 import { MedicalHistoryService } from 'src/app/services/medical-history.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-diets-history',
@@ -18,7 +19,7 @@ export class DietsHistoryComponent implements OnInit {
   hc_id = '';
   hc:HistoriaClinica;
   dietaList:Dieta[];
-  date1 = '';
+  date = '';
   date2 = '';
 
   ngOnInit(): void { 
@@ -34,9 +35,22 @@ export class DietsHistoryComponent implements OnInit {
     this.dieta_service.getDietaList(this.hc_id).subscribe(
       result => {
         this.dietaList = result;
+        this.formatDates();
         this.loading = false;
       }
     )
+  }
+
+  formatDates() {
+    this.dietaList.forEach(e => e.inicio = moment(e.inicio).format('DD/MM/YYYY'));
+    this.dietaList.forEach(e => {
+      if(e.fin != '') {
+      e.fin = moment(e.fin).format('DD/MM/YYYY')
+    } else {
+      e.fin = 'Actual';
+    }
+  });
+
   }
 
   getMedicalHistory() {

@@ -135,7 +135,7 @@ export class DietaFormComponent implements OnInit {
 
     } else {
 
-      if(this.currentDieta._id!=undefined) {
+      if(this.currentDieta!=undefined && this.currentDieta._id!=undefined) {
         this.currentDieta.fin = this.dieta.inicio;
         this.currentDieta.current = false;
         Swal.fire({

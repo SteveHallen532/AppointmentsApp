@@ -34,10 +34,10 @@
         <div *ngIf="appointments.length > 0">
             <div class="list-group">
                 <div *ngFor="let date of dates | filterByDate: date1 : date2">
-                    <p class="h5 capitalize">{{calendarize(date)}}</p>
+                    <p class="h5 capitalize padding-top">{{calendarize(date)}}</p>
                     <div  *ngFor="let appointment of appointments">
                         <div *ngIf="isSameDate(date, appointment.fecha)">
-                            <div class="row">
+                            <div class="row padding-top">
                                 <div class="col-5 col-lg-10">
                                     <div [ngStyle]="{'background-color': appointment.sobreturno == true ? 'green': appointment.asignado == true && appointment.confirmado == true? 'LightSteelBlue': appointment.enabled == false? 'grey': appointment.asignado == true? 'PowderBlue': 'white'}" class="list-group-item list-group-item-action">{{appointment.hora}} {{appointment.patient?.nombre}} {{appointment.patient?.apellido}}</div>
                                 </div>

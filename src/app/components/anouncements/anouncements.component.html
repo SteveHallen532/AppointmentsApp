@@ -10,7 +10,7 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
-<div *ngIf="loading == false">
+<div class="padding-botom" *ngIf="loading == false">
     <p class="h1 text-center">Anuncios</p>
     <form action="submit" ngNativeValidate>
         <div class="container">
@@ -41,7 +41,7 @@
                             <div class="col-lg-11 col-10">
                                 <h5 class="card-title">{{announcement.title}}</h5>
                             </div>
-                            <div class="col-lg-1 col-2 d-flex justify-content-center">
+                            <div class="col-lg-1 col-2 d-flex justify-content-end">
                                 <button type="button" class="btn-close" aria-label="Close" (click)="delete(announcement._id)"></button>
                             </div>
                         </div>

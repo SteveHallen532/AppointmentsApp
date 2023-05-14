@@ -26,7 +26,7 @@ import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoginComponent } from './components/login/login.component';
 import { FilterByDatePipe } from './pipes/filter-by-date.pipe';
-import {DateValidatorDirective} from './validations';
+import { DateValidatorDirective } from './validations';
 import { RouterModule } from '@angular/router';
 import { PlantillaDietaComponent } from './components/plantilla-dieta/plantilla-dieta.component';
 import { PlantillaDietaListComponent } from './components/plantilla-dieta-list/plantilla-dieta-list.component';
@@ -37,6 +37,10 @@ import { DietsHistoryComponent } from './components/diets-history/diets-history.
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { InbodyComponent } from './components/inbody/inbody.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -71,6 +75,8 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     DragAndDropDirective
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule,
@@ -78,7 +84,9 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     FormsModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AngularEditorModule
+    AngularEditorModule,
+    BrowserAnimationsModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

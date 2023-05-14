@@ -65,6 +65,17 @@ svg {
     padding-top: 20px;
 }
 
+.padding-top-35 {
+    padding-top: 35px;
+}
+
 .padding-bottom {
     padding-bottom: 10px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html {
+    overflow-y: scroll;
 }

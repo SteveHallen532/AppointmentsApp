@@ -157,8 +157,18 @@ export class ConsultasComponent implements OnInit {
     }
   }
 
+  waightDiference(consulta:Consulta) {
+    let i = this.consultas.indexOf(consulta);
+    if(i<this.consultas.length-1) {
+      return Number(this.consultas[i].peso) - Number(this.consultas[i+1].peso);
+    }
+  }
+
   back() {
     this.router.navigate(['/patients-list/'])
     }
 
+  date(fecha:string) {
+    return moment(fecha, 'YYYY-MM-DD').format('DD/MM/YYYY')
+  }
 }
