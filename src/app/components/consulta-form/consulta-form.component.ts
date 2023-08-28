@@ -58,19 +58,34 @@ export class ConsultaFormComponent implements OnInit {
   }
 
   saveConsulta() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Datos guardados',
-      showConfirmButton: false,
-      timer: 1500
-    }).then(() => {
+    console.log(this.consulta)
+    if(this.id_consulta != undefined && this.id_consulta != '') {
+      this.consulta_service.editConsultas(this.consulta, this.id, this.id_consulta)
+      .subscribe(() =>{
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Datos guardados',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          this.location.back();
+        })
+      })
+    } else {
       this.consulta_service.newConsultas(this.consulta, this.id)
       .subscribe(() =>{
-        this.location.back();
-        }
-      )
-    })
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Datos guardados',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          this.location.back();
+        })
+      })
+    }
   }   
 
   cancel(){

@@ -19,6 +19,11 @@ export class ConsultasService {
     return this.http.post(`${environment.apiUrl}/historia_clinica/`+id+`/consultas`, consulta)
   }
 
+  //falta endpoint?
+  editConsultas(consulta:Consulta, id:string, id_consulta:string):Observable<any>{
+    return this.http.put<Consulta>(`${environment.apiUrl}/historia_clinica/`+id+`/consultas/`+id_consulta, consulta)
+  }
+
   getConsulta(id:string, id_consulta:string):Observable<Consulta>{
     return this.http.get<Consulta>(`${environment.apiUrl}/historia_clinica/`+id+`/consultas/`+id_consulta)
   }
