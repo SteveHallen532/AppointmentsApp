@@ -22,6 +22,7 @@ import { Location } from '@angular/common';
 export class AppointmentsListComponent implements OnInit {
 
   @Input() appointmentsInput: Appointment[] = [];
+  @Input() recicled: boolean;
 
   date1 = '';
 

@@ -139,7 +139,7 @@
         <button class="btn btn-primary" (click)="goToAppointmentsList(id_patient)">Asignar</button>
       </div>
       <div id="appointments-list-div padding-top" class="overflow-auto" *ngIf="appointmentss.length > 0, else elseBlock2">
-        <app-appointments-list [appointmentsInput]="appointmentss"></app-appointments-list>
+        <app-appointments-list [appointmentsInput]="appointmentss" [recicled]="true"></app-appointments-list>
       </div>
       <ng-template #elseBlock2>
       <div class="row">
