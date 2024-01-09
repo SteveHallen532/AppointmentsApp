@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
+import { LoginComponent } from './components/login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
   title = 'appointments-app';
+  logged : boolean;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -17,6 +19,13 @@ export class AppComponent {
   ){
 
   }
+
+  onActivate(componentRef){
+    console.log(componentRef)
+    if(componentRef instanceof LoginComponent) {
+      this.logged = false
+    } else { this.logged = true}
+  } 
 
   logout() {
     this.authenticationService.logout();

@@ -11,8 +11,8 @@ export const environment = {
     databaseURL: 'https://softinmo532.firebaseio.com',
     projectId: 'softinmo532',
     storageBucket: 'softinmo532.appspot.com',
-    messagingSenderId: '<your-messaging-sender-id>'
-  }
+    messagingSenderId: '<your-messaging-sender-id>',
+  },
 };
 
 /*
